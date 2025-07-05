@@ -3,66 +3,88 @@
     "id": "a0000",
     "article_name": "Python",
     "article_img":"https://renemages.wordpress.com/wp-content/uploads/2019/07/python-logo.jpg",
-    "tags": ["python"]
+    "tags": ["python"],
+    "data_article":"../data/Article2.json",
+    "url_path":"/article/articlepage1"
   },
   {
     "id": "a0001",
     "article_name": "React",
     "article_img":"https://miro.medium.com/v2/resize:fit:2000/0*zj_kGMq6f2ZxW7p3.png",
-    "tags": ["react"]
+    "tags": ["react"],
+    "data_article":"../data/Article2.json",
+    "url_path":"/article/articlepage1"
   },
   {
     "id": "a0002",
     "article_name": "GCP",
     "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMek698YjgnhBKtUXZ2W2xrlCchPoFpJGzOA&s",
-    "tags": ["GCP"]
+    "tags": ["GCP"],
+    "data_article":"../data/Article2.json",
+    "url_path":"/article/articlepage1"
   },
   {
     "id": "a0003",
     "article_name": "SQL",
     "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsHhT0lhtqSDNWxRp-jWjGiqMvYce069W8uA&s",
-    "tags": ["SQL"]
+    "tags": ["SQL"],
+    "data_article":"../data/Article2.json",
+    "url_path":"/article/articlepage1"
   },
   {
     "id": "a0004",
     "article_name": "Consulting",
     "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTwJQgnkGPWVR8wLdpwWaSGlGbGgcX9-yVww&s",
-    "tags": ["consulting"]
+    "tags": ["consulting"],
+    "data_article":"../data/Article2.json",
+    "url_path":"/article/articlepage1"
   },
   {
     "id": "a0005",
     "article_name": "Scraping",
     "article_img":"https://kinsta.com/wp-content/uploads/2022/07/Types-of-web-data.png",
-    "tags": ["scraping"]
+    "tags": ["scraping"],
+    "data_article":"../data/Article2.json",
+    "url_path":"/article/articlepage1"
   },
   {
     "id": "a0006",
     "article_name": "Conda",
     "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO_zAeFKx1iw_cF_Md2KQPodPj_Bsl3E5PTg&s",
-    "tags": ["conda"]
+    "tags": ["conda"],
+    "data_article":"../data/Article2.json",
+    "url_path":"/article/articlepage1"
   },
   {
     "id": "a0007",
     "article_name": "Test Unitaire",
     "article_img":"https://www.all4test.fr/wp-content/uploads/2024/05/Test-unitaire.png",
-    "tags": ["test unitaire"]
+    "tags": ["test unitaire"],
+    "data_article":"../data/Article2.json",
+    "url_path":"/article/articlepage1"
   },
   {
     "id": "a0008",
     "article_name": "Git",
     "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdd25hyNQOMs4Xx1Cv_A_oaT0zagfSWlXMBA&s",
-    "tags": ["git"]
+    "tags": ["git"],
+    "data_article":"../data/Article2.json",
+    "url_path":"/article/articlepage1"
   },
   {
     "id": "a0009",
     "article_name": "Gitlab",
     "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFKg9m11etTIsPzyFsrUawOJDGAiABkEtF5w&s",
-    "tags": ["gitlab"]
+    "tags": ["gitlab"],
+    "data_article":"../data/Article2.json",
+    "url_path":"/article/articlepage1"
   },
   {
     "id": "a0010",
     "article_name": "Github Action",
     "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR39ldtVNqi-TTD7cs27mTGPdGanwulOJyHQ&s",
-    "tags": ["github action"]
+    "tags": ["github action"],
+    "data_article":"../data/Article2.json",
+    "url_path":"/article/articlepage1"
   }
 ]

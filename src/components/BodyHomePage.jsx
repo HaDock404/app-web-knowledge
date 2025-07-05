@@ -55,13 +55,13 @@ function BodyHomePage() {
             </article>
             
                 {items.length > 0 ? (
-                    items.map(({ id, article_name, article_img }) => {
+                    items.map(({ article_name, article_img, data_article, url_path }) => {
                 
   
                 return (
                     <QuizCard
-                        to="/article/articlepage1"
-                        data={articleData1}
+                        to={url_path}
+                        data={data_article}
                         title={article_name}
                         img_path={article_img}
                     />
@@ -69,7 +69,7 @@ function BodyHomePage() {
               })
                 ) : (
                     <QuizCard
-                        to="/article/articlepage1"
+                        to="/"
                         data=""
                         title="No Data"
                         img_path=""
