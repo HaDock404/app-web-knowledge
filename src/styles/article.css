@@ -65,6 +65,12 @@
     height: 30px;
 }
 
+.article_code {
+    width: 300px;
+    height: 100px;
+    background-color: red;
+}
+
 @media (max-width : 1190px) and (min-width: 600px) {
     .article_page_section {
         width: calc(100% - 100px);

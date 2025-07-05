@@ -17,6 +17,10 @@
     {
       "type": "paragraph",
       "text": "Lorem machin truc."
+    },
+    {
+      "type": "code",
+      "text": "Lorem machin truc."
     }
   ]
 }

@@ -14,6 +14,7 @@ import articleData11 from '../data/Article11.json';
 
 import "../styles/article.css";
 import Header from '../components/Header';
+import CopyingButton from '../components/CopyingButton'
 
 const ArticlePage = () => {
   const { articleId } = useParams();
@@ -49,6 +50,14 @@ const ArticlePage = () => {
               key={index} 
               src={block.src} 
               alt={block.alt} />;
+    case 'code':
+      return (
+          <div className='article_code'>
+            {block.text}
+            <CopyingButton text={block.text}/>
+          </div>
+      )
+        
     default:
       return null;
   }
