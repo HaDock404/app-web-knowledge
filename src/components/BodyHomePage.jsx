@@ -34,8 +34,6 @@ function BodyHomePage() {
         }
     };
 
-
-
     return (
         <section className="body_homepage_section">
             <article className='body_homepage_article_header'>
@@ -57,7 +55,7 @@ function BodyHomePage() {
             </article>
             
                 {items.length > 0 ? (
-                    items.map(({ id, article_name }) => {
+                    items.map(({ id, article_name, article_img }) => {
                 
   
                 return (
@@ -65,88 +63,18 @@ function BodyHomePage() {
                         to="/article/articlepage1"
                         data={articleData1}
                         title={article_name}
-                        img_path="https://storage.googleapis.com/fortnite-erwin/image1.jpg"
+                        img_path={article_img}
                     />
                 );
               })
                 ) : (
-                    <div
-                        style={{
-                        padding: "20px",
-                        textAlign: "center",
-                        color: "#888",
-                        fontFamily: "Inter, sans-serif",
-                        }}
-                    >
-                        No result.
-                    </div>
+                    <QuizCard
+                        to="/article/articlepage1"
+                        data=""
+                        title="No Data"
+                        img_path=""
+                    />
                 )}
-            
-
-
-
-
-
-
-
-
-
-
-
-            <QuizCard
-                to="/article/articlepage1"
-                data={articleData1}
-                title="Pourquoi jouer à Fortnite ?"
-                img_path="https://storage.googleapis.com/fortnite-erwin/image1.jpg"
-            />
-            <QuizCard
-                to="/article/articlepage2"
-                data={articleData2}
-                title="Installation sur PC"
-                img_path="https://storage.googleapis.com/fortnite-erwin/image2.jpg"
-            />
-            <QuizCard
-                to="/article/articlepage1"
-                data={articleData1}
-                title="Pourquoi jouer à Fortnite ?"
-                img_path="https://storage.googleapis.com/fortnite-erwin/image1.jpg"
-            />
-            <QuizCard
-                to="/article/articlepage2"
-                data={articleData2}
-                title="Installation sur PC"
-                img_path="https://storage.googleapis.com/fortnite-erwin/image2.jpg"
-            />
-            <QuizCard
-                to="/article/articlepage1"
-                data={articleData1}
-                title="Pourquoi jouer à Fortnite ?"
-                img_path="https://storage.googleapis.com/fortnite-erwin/image1.jpg"
-            />
-            <QuizCard
-                to="/article/articlepage2"
-                data={articleData2}
-                title="Installation sur PC"
-                img_path="https://storage.googleapis.com/fortnite-erwin/image2.jpg"
-            />
-            <QuizCard
-                to="/article/articlepage1"
-                data={articleData1}
-                title="Pourquoi jouer à Fortnite ?"
-                img_path="https://storage.googleapis.com/fortnite-erwin/image1.jpg"
-            />
-            <QuizCard
-                to="/article/articlepage2"
-                data={articleData2}
-                title="Installation sur PC"
-                img_path="https://storage.googleapis.com/fortnite-erwin/image2.jpg"
-            />
-            <QuizCard
-                to="/article/articlepage1"
-                data={articleData1}
-                title="Pourquoi jouer à Fortnite ?"
-                img_path="https://storage.googleapis.com/fortnite-erwin/image1.jpg"
-            />
             <QuizCard
                 to="/article/articlepage2"
                 data={articleData2}
