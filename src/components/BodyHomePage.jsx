@@ -1,15 +1,146 @@
+import React, { useState } from 'react';
 import '../styles/homepage.css'
 import QuizCard from './QuizCard'
+import articleData from '../data/articles-list.json';
+import Icon3 from './SearchIcon.jsx';
 
 import articleData1 from '../data/Article1.json';
 import articleData2 from '../data/Article2.json';
 
 function BodyHomePage() {
+    const sortedArticles = [...articleData].sort((a, b) => a.article_name.localeCompare(b.article_name));
+    const [search, setSearch] = useState('');
+    const onSearchChange = (value) => {
+        setSearch(value.toLowerCase());
+    };
+
+    const items = sortedArticles.filter((item) =>
+        item.tags.some((tag) => tag.includes(search))
+    );
+
+
+
+
+    const [inputValue, setInputValue] = useState(search);
+    const handleSearch = () => {
+        onSearchChange(inputValue);
+    };
+    const handleInputChange = (e) => {
+        setInputValue(e.target.value);
+    };
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    };
+
+
+
     return (
         <section className="body_homepage_section">
             <article className='body_homepage_article_header'>
-                <span className='body_homepage_article_header_title'>Dashboard</span>
+                    <input 
+                        class="body_homepage_article_header_search" 
+                        type="text" 
+                        placeholder="Rechercher"
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        onKeyDown={handleKeyPress}
+                    />
+                    <button 
+                        className="body_homepage_article_header_search_button"
+                        onClick={handleSearch}
+                    >
+                        <Icon3 />
+                    </button>
+
             </article>
+            
+                {items.length > 0 ? (
+                    items.map(({ id, article_name }) => {
+                
+  
+                return (
+                    <QuizCard
+                        to="/article/articlepage1"
+                        data={articleData1}
+                        title={article_name}
+                        img_path="https://storage.googleapis.com/fortnite-erwin/image1.jpg"
+                    />
+                );
+              })
+                ) : (
+                    <div
+                        style={{
+                        padding: "20px",
+                        textAlign: "center",
+                        color: "#888",
+                        fontFamily: "Inter, sans-serif",
+                        }}
+                    >
+                        No result.
+                    </div>
+                )}
+            
+
+
+
+
+
+
+
+
+
+
+
+            <QuizCard
+                to="/article/articlepage1"
+                data={articleData1}
+                title="Pourquoi jouer à Fortnite ?"
+                img_path="https://storage.googleapis.com/fortnite-erwin/image1.jpg"
+            />
+            <QuizCard
+                to="/article/articlepage2"
+                data={articleData2}
+                title="Installation sur PC"
+                img_path="https://storage.googleapis.com/fortnite-erwin/image2.jpg"
+            />
+            <QuizCard
+                to="/article/articlepage1"
+                data={articleData1}
+                title="Pourquoi jouer à Fortnite ?"
+                img_path="https://storage.googleapis.com/fortnite-erwin/image1.jpg"
+            />
+            <QuizCard
+                to="/article/articlepage2"
+                data={articleData2}
+                title="Installation sur PC"
+                img_path="https://storage.googleapis.com/fortnite-erwin/image2.jpg"
+            />
+            <QuizCard
+                to="/article/articlepage1"
+                data={articleData1}
+                title="Pourquoi jouer à Fortnite ?"
+                img_path="https://storage.googleapis.com/fortnite-erwin/image1.jpg"
+            />
+            <QuizCard
+                to="/article/articlepage2"
+                data={articleData2}
+                title="Installation sur PC"
+                img_path="https://storage.googleapis.com/fortnite-erwin/image2.jpg"
+            />
+            <QuizCard
+                to="/article/articlepage1"
+                data={articleData1}
+                title="Pourquoi jouer à Fortnite ?"
+                img_path="https://storage.googleapis.com/fortnite-erwin/image1.jpg"
+            />
+            <QuizCard
+                to="/article/articlepage2"
+                data={articleData2}
+                title="Installation sur PC"
+                img_path="https://storage.googleapis.com/fortnite-erwin/image2.jpg"
+            />
             <QuizCard
                 to="/article/articlepage1"
                 data={articleData1}
