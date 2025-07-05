@@ -6,12 +6,17 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import './styles/normalize.css'
+import GlobalStyle from './styles/createGlobalStyle.jsx'
+import ScrollToTop from "./styles/ScrollToTop";
 import App from './pages/App';
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <HashRouter>
+      <GlobalStyle/>
+      <ScrollToTop />
         <Routes>
           <Route path="/" element={<App />}/>
         </Routes>
