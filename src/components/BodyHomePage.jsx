@@ -4,9 +4,6 @@ import QuizCard from './QuizCard'
 import articleData from '../data/articles-list.json';
 import Icon3 from './SearchIcon.jsx';
 
-import articleData1 from '../data/Article1.json';
-import articleData2 from '../data/Article2.json';
-
 function BodyHomePage() {
     const sortedArticles = [...articleData].sort((a, b) => a.article_name.localeCompare(b.article_name));
     const [search, setSearch] = useState('');
@@ -75,12 +72,6 @@ function BodyHomePage() {
                         img_path=""
                     />
                 )}
-            <QuizCard
-                to="/article/articlepage2"
-                data={articleData2}
-                title="Installation sur PC"
-                img_path="https://storage.googleapis.com/fortnite-erwin/image2.jpg"
-            />
         </section>
     )
 }

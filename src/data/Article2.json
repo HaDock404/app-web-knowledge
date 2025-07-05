@@ -1,9 +1,9 @@
 {
-  "title": "Why play Fortnite?",
+  "title": "React",
   "content": [
     {
       "type": "image",
-      "src": "https://storage.googleapis.com/fortnite-erwin/image1.jpg",
+      "src": "https://renemages.wordpress.com/wp-content/uploads/2019/07/python-logo.jpg",
       "alt": ""
     },
     {
@@ -12,11 +12,11 @@
     {
       "type": "heading",
       "level": 2,
-      "text": "Pour se rassembler 💪🏼"
+      "text": "Heading"
     },
     {
       "type": "paragraph",
-      "text": "Chez Erwin Labs, nous sommes convaincus qu’une équipe"
+      "text": "Lorem machin truc."
     }
   ]
 }
