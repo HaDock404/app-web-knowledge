@@ -9,8 +9,9 @@ import {
 import './styles/normalize.css'
 import GlobalStyle from './styles/createGlobalStyle.jsx'
 import ScrollToTop from "./styles/ScrollToTop";
-import App from './pages/App';
 
+import HomePage from './pages/HomePage';
+import ArticlePage from './pages/ArticlePage';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,7 +19,8 @@ root.render(
       <GlobalStyle/>
       <ScrollToTop />
         <Routes>
-          <Route path="/" element={<App />}/>
+          <Route path="/" element={<HomePage />}/>
+          <Route path="/article/:articleId" element={<ArticlePage />} />
         </Routes>
     <React.StrictMode></React.StrictMode>
   </HashRouter>,

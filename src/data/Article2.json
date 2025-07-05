@@ -1,0 +1,22 @@
+{
+  "title": "Why play Fortnite?",
+  "content": [
+    {
+      "type": "image",
+      "src": "https://storage.googleapis.com/fortnite-erwin/image1.jpg",
+      "alt": ""
+    },
+    {
+      "type": "jump"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pour se rassembler 💪🏼"
+    },
+    {
+      "type": "paragraph",
+      "text": "Chez Erwin Labs, nous sommes convaincus qu’une équipe"
+    }
+  ]
+}
