@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/app-web-knowledge/static/css/main.58462fbc.css",
-    "main.js": "/app-web-knowledge/static/js/main.5c5a892d.js",
+    "main.css": "/app-web-knowledge/static/css/main.8333d787.css",
+    "main.js": "/app-web-knowledge/static/js/main.bec217e4.js",
     "static/js/453.95511c68.chunk.js": "/app-web-knowledge/static/js/453.95511c68.chunk.js",
+    "static/media/logo.png": "/app-web-knowledge/static/media/logo.090b6964458dfc5bfaaa.png",
     "index.html": "/app-web-knowledge/index.html",
-    "main.58462fbc.css.map": "/app-web-knowledge/static/css/main.58462fbc.css.map",
-    "main.5c5a892d.js.map": "/app-web-knowledge/static/js/main.5c5a892d.js.map",
+    "main.8333d787.css.map": "/app-web-knowledge/static/css/main.8333d787.css.map",
+    "main.bec217e4.js.map": "/app-web-knowledge/static/js/main.bec217e4.js.map",
     "453.95511c68.chunk.js.map": "/app-web-knowledge/static/js/453.95511c68.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.58462fbc.css",
-    "static/js/main.5c5a892d.js"
+    "static/css/main.8333d787.css",
+    "static/js/main.bec217e4.js"
   ]
 }
