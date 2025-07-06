@@ -72,7 +72,7 @@ const ArticlePage = () => {
     case 'code':
       return (
         <div className='article_code' key={index}>
-          {block.text}
+          <pre>{block.text}</pre>
           <CopyingButton text={block.text}/>
         </div>
       );

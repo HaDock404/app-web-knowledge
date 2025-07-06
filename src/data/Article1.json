@@ -9,40 +9,451 @@
     {
       "type": "index",
       "items": [
-        { "text": "Introduction", "anchor": "intro" },
-        { "text": "Heading", "anchor": "heading" },
-        { "text": "Code section", "anchor": "code-section" }
+        { "text": "Option", "anchor": "anchor0" },
+        { "text": "Chargement des données", "anchor": "anchor1" },
+        { "text": "Comprendre les données", "anchor": "anchor2" },
+        { "text": "Modifier les données", "anchor": "anchor3" },
+        { "text": "Gérer les valeurs manquantes", "anchor": "anchor4" },
+        { "text": "Gérer les doublons", "anchor": "anchor5" },
+        { "text": "Correction des types de données", "anchor": "anchor6" },
+        { "text": "Standardisation et Normalisation des Données", "anchor": "anchor7" },
+        { "text": "Détection et Suppression des Valeurs Aberrantes (Outliers)", "anchor": "anchor8" },
+        { "text": "Nettoyage des Données Textuelles", "anchor": "anchor9" },
+        { "text": "Détection et Correction des Fautes de Saisie", "anchor": "anchor10" },
+        { "text": "Encodage des Variables Catégoriques", "anchor": "anchor11" },
+        { "text": "Fusion et Regroupement de Données", "anchor": "anchor12" },
+        { "text": "Automatisation des Nettoyages avec des Pipelines", "anchor": "anchor13" },
+        { "text": "Gestion des données volumineuses", "anchor": "anchor14" },
+        { "text": "Traitement des valeurs aberrantes et incohérentes", "anchor": "anchor15" },
+        { "text": "Fusion et Dédoublonnage des Données", "anchor": "anchor16" },
+        { "text": "Standardisation des formats et des unités", "anchor": "anchor17" },
+        { "text": "Détection d'Anomalies avec des Méthodes Avancées", "anchor": "anchor18" }
+
+        
       ]
     },
+
     {
       "type": "heading",
       "level": 2,
-      "text": "Introduction",
-      "anchor": "intro"
+      "text": "Option",
+      "anchor": "anchor0"
     },
     {
       "type": "paragraph",
-      "text": "Introduction to Python."
-    },
-    {
-      "type": "heading",
-      "level": 2,
-      "text": "Heading",
-      "anchor": "heading"
-    },
-    {
-      "type": "paragraph",
-      "text": "Lorem machin truc."
-    },
-    {
-      "type": "heading",
-      "level": 2,
-      "text": "Code section",
-      "anchor": "code-section"
+      "text": "Pour visualiser toutes les colonnes du Dataframe"
     },
     {
       "type": "code",
-      "text": "print('Hello World')"
+      "text": "import pandas as pd\npd.set_option(\"display.max_columns\", None)"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Chargement des données",
+      "anchor": "anchor1"
+    },
+    {
+      "type": "paragraph",
+      "text": "Avant de nettoyer les données, il faut les charger :"
+    },
+    {
+      "type": "code",
+      "text": "import pandas as pd\n\n# Charger un fichier CSV\ndf = pd.read_csv(\"data.csv\")\npd.set_option('display.max_columns', None) #permet d'afficher toutes les colonnes\n\n# Afficher les premières lignes\nprint(df.head())"
+    },
+    {
+      "type": "paragraph",
+      "text": "On peut aussi charger d'autres formats comme Excel (pd.read_excel()), JSON (pd.read_json()) ou SQL (pd.read_sql())."
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Comprendre les données",
+      "anchor": "anchor2"
+    },
+    {
+      "type": "paragraph",
+      "text": "Avant de nettoyer, il faut examiner l'état des données :"
+    },
+    {
+      "type": "code",
+      "text": "# Afficher des infos générales\nprint(df.info())\n\n# Résumé statistique des colonnes numériques\nprint(df.describe())\n\n# Voir les valeurs uniques d'une colonne\nprint(df[\"colonne\"].unique())"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Modifier les données",
+      "anchor": "anchor3"
+    },
+    {
+      "type": "paragraph",
+      "text": "On peut réaliser plusieurs modifications pour plus de lisibilité."
+    },
+    {
+      "type": "code",
+      "text": "df.rename(columns={\n'price': 'prix(million)', \n'area': 'air(m2)',\n'bedrooms' : 'chambres',\n'bathrooms' : 'sdb',\n'stories' : 'étages',\n'mainroad' : 'route principale',\n'guestroom' : 'chambre ami',\n'basement' : 'sous sol',\n'hotwaterheating' : 'chauffage au gaz',\n'airconditioning' : 'climatisation',\n'parking' : 'parking',\n'prefarea' : 'résidentiel',\n'furnishingstatus' : 'meublé',\n}, inplace=True)"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Gérer les valeurs manquantes",
+      "anchor": "anchor4"
+    },
+    {
+      "type": "paragraph",
+      "text": "Détection des valeurs manquantes :"
+    },
+    {
+      "type": "code",
+      "text": "print(df.isnull().sum())  # Compter le nombre de NaN par colonne"
+    },
+    {
+      "type": "paragraph",
+      "text": "Supprimer les lignes ou colonnes avec des valeurs manquantes :"
+    },
+    {
+      "type": "code",
+      "text": "df = df.dropna()  # Supprime toutes les lignes avec au moins un NaN\ndf = df.dropna(axis=1)  # Supprime les colonnes avec au moins un NaN"
+    },
+    {
+      "type": "paragraph",
+      "text": "Remplacer les valeurs manquantes"
+    },
+    {
+      "type": "code",
+      "text": "df[\"colonne\"] = df[\"colonne\"].fillna(\"valeur_par_défaut\")  # Remplir avec une valeur spécifique\ndf[\"colonne\"] = df[\"colonne\"].fillna(df[\"colonne\"].mean())  # Remplir avec la moyenne"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Gérer les doublons",
+      "anchor": "anchor5"
+    },
+    {
+      "type": "paragraph",
+      "text": "Les doublons peuvent fausser les analyses :"
+    },
+    {
+      "type": "code",
+      "text": "# Détection des doublons\nprint(df.duplicated().sum())\n# ou aussi\ndf.loc[df.duplicated()]\n\n# Suppression des doublons\ndf = df.drop_duplicates()"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Correction des types de données",
+      "anchor": "anchor6"
+    },
+    {
+      "type": "paragraph",
+      "text": "Parfois, les données sont mal typées :"
+    },
+    {
+      "type": "code",
+      "text": "# Convertir une colonne en numérique\ndf[\"colonne\"] = pd.to_numeric(df[\"colonne\"], errors=\"coerce\")\n\n# Convertir une colonne en date\ndf[\"date_colonne\"] = pd.to_datetime(df[\"date_colonne\"], errors=\"coerce\")"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Standardisation et Normalisation des Données",
+      "anchor": "anchor7"
+    },
+    {
+      "type": "paragraph",
+      "text": "Standardisation (centrage-réduction, moyenne = 0, écart-type = 1) :"
+    },
+    {
+      "type": "code",
+      "text": "from sklearn.preprocessing import StandardScaler\n\nscaler = StandardScaler()\ndf[[\"colonne1\", \"colonne2\"]] = scaler.fit_transform(df[[\"colonne1\", \"colonne2\"]])"
+    },
+    {
+      "type": "paragraph",
+      "text": "Normalisation (valeurs entre 0 et 1) :"
+    },
+    {
+      "type": "code",
+      "text": "from sklearn.preprocessing import MinMaxScaler\n\nscaler = MinMaxScaler()\ndf[[\"colonne1\", \"colonne2\"]] = scaler.fit_transform(df[[\"colonne1\", \"colonne2\"]])"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Détection et Suppression des Valeurs Aberrantes (Outliers)",
+      "anchor": "anchor8"
+    },
+    {
+      "type": "paragraph",
+      "text": "Utilisation de l'IQR (Interquartile Rang, 50 % des valeurs centrales) :"
+    },
+    {
+      "type": "code",
+      "text": "Q1 = df[\"colonne\"].quantile(0.25)\nQ3 = df[\"colonne\"].quantile(0.75)\nIQR = Q3 - Q1\n\ndf = df[~((df[\"colonne\"] < (Q1 - 1.5 * IQR)) | (df[\"colonne\"] > (Q3 + 1.5 * IQR)))]"
+    },
+    {
+      "type": "paragraph",
+      "text": "Utilisation de l'écart-type (variabilité des données) :"
+    },
+    {
+      "type": "code",
+      "text": "mean = df[\"colonne\"].mean()\nstd = df[\"colonne\"].std()\n\ndf = df[(df[\"colonne\"] > mean - 3 * std) & (df[\"colonne\"] < mean + 3 * std)]"
+    },
+    
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Nettoyage des Données Textuelles",
+      "anchor": "anchor9"
+    },
+    {
+      "type": "paragraph",
+      "text": "Suppression des espaces en trop :"
+    },
+    {
+      "type": "code",
+      "text": "df[\"colonne\"] = df[\"colonne\"].str.strip()"
+    },
+    {
+      "type": "paragraph",
+      "text": "Mise en minuscule :"
+    },
+    {
+      "type": "code",
+      "text": "df[\"colonne\"] = df[\"colonne\"].str.lower()"
+    },
+    {
+      "type": "paragraph",
+      "text": "Suppression des caractères spéciaux :"
+    },
+    {
+      "type": "code",
+      "text": "import re\ndf[\"colonne\"] = df[\"colonne\"].apply(lambda x: re.sub(r\"[^a-zA-Z0-9 ]\", \"\", x))"
+    },
+    {
+      "type": "paragraph",
+      "text": "Suppression des stopwords (mots inutiles) avec nltk :"
+    },
+    {
+      "type": "code",
+      "text": "from nltk.corpus import stopwords\nstop_words = set(stopwords.words(\"french\"))\n\ndf[\"colonne\"] = df[\"colonne\"].apply(lambda x: \" \".join([word for word in x.split() if word not in stop_words]))"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Détection et Correction des Fautes de Saisie",
+      "anchor": "anchor10"
+    },
+    {
+      "type": "paragraph",
+      "text": "On peut utiliser fuzzywuzzy pour corriger des noms mal écrits."
+    },
+    {
+      "type": "code",
+      "text": "from fuzzywuzzy import process\n\nchoices = [\"Paris\", \"Marseille\", \"Lyon\"]\ndf[\"colonne_corrigée\"] = df[\"colonne\"].apply(lambda x: process.extractOne(x, choices)[0])"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Encodage des Variables Catégoriques",
+      "anchor": "anchor11"
+    },
+    {
+      "type": "paragraph",
+      "text": "Si une colonne contient des catégories, il faut l'encoder en numérique. Encodage One-Hot (binaire) :"
+    },
+    {
+      "type": "code",
+      "text": "df = pd.get_dummies(df, columns=[\"categorie\"], drop_first=True)"
+    },
+    {
+      "type": "paragraph",
+      "text": "Encodage Ordinal :"
+    },
+    {
+      "type": "code",
+      "text": "from sklearn.preprocessing import OrdinalEncoder\n\nencoder = OrdinalEncoder(categories=[[\"Bas\", \"Moyen\", \"Élevé\"]])\ndf[\"colonne\"] = encoder.fit_transform(df[[\"colonne\"]])"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fusion et Regroupement de Données",
+      "anchor": "anchor12"
+    },
+    {
+      "type": "paragraph",
+      "text": "Jointure entre deux DataFrames :"
+    },
+    {
+      "type": "code",
+      "text": "df_final = df1.merge(df2, on=\"clé_commune\", how=\"left\")"
+    },
+    {
+      "type": "paragraph",
+      "text": "Concaténation verticale :"
+    },
+    {
+      "type": "code",
+      "text": "df_final = pd.concat([df1, df2], axis=0)"
+    },
+    {
+      "type": "paragraph",
+      "text": "Agrégation des données :"
+    },
+    {
+      "type": "code",
+      "text": "df_grouped = df.groupby(\"colonne_catégorique\").agg({\"colonne_numérique\": \"mean\"})"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Automatisation des Nettoyages avec des Pipelines",
+      "anchor": "anchor13"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pour structurer le processus, on peut utiliser sklearn.pipeline."
+    },
+    {
+      "type": "code",
+      "text": "from sklearn.pipeline import Pipeline\nfrom sklearn.impute import SimpleImputer\nfrom sklearn.preprocessing import StandardScaler\n\npipeline = Pipeline([\n(\"imputation\", SimpleImputer(strategy=\"mean\")),\n(\"normalisation\", StandardScaler())\n])\n\ndf[[\"colonne1\", \"colonne2\"]] = pipeline.fit_transform(df[[\"colonne1\", \"colonne2\"]])"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Gestion des données volumineuses",
+      "anchor": "anchor14"
+    },
+    {
+      "type": "paragraph",
+      "text": "Quand on travaille avec des millions de lignes, pandas peut atteindre ses limites. On utilise alors des alternatives comme Dask, Polars ou PySpark."
+    },
+    {
+      "type": "paragraph",
+      "text": "Exemple avec Dask pour charger et traiter un fichier volumineux"
+    },
+    {
+      "type": "code",
+      "text": "import dask.dataframe as dd\n\n# Chargement d'un fichier CSV volumineux\ndf = dd.read_csv(\"large_dataset.csv\")\n\n# Appliquer des transformations (remplacement des NaN et conversion d'un champ)\ndf = df.fillna({\"colonne1\": \"Valeur par défaut\"})\ndf[\"colonne2\"] = df[\"colonne2\"].astype(float)\n\n# Sauvegarde après transformation\ndf.to_csv(\"cleaned_data.csv\", single_file=True)"
+    },
+    {
+      "type": "paragraph",
+      "text": "Avantages de Dask : Il permet de traiter les données en parallèle et de travailler avec des jeux de données qui dépassent la mémoire RAM."
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Traitement des valeurs aberrantes et incohérentes",
+      "anchor": "anchor15"
+    },
+    {
+      "type": "paragraph",
+      "text": "Les valeurs aberrantes (outliers) peuvent fausser les analyses et les modèles. On peut les identifier via la Méthodes statistiques (Z-score, IQR) ou la Méthodes basées sur le Machine Learning."
+    },
+    {
+      "type": "paragraph",
+      "text": "Détection des outliers avec l'IQR (Interquartile Range)"
+    },
+    {
+      "type": "code",
+      "text": "import pandas as pd\nimport numpy as np\n\ndf = pd.DataFrame({\"salaire\": [2500, 3000, 4000, 50000, 3200, 2900, 2800, 2600]})\n\n# Calcul des quartiles\nQ1 = df[\"salaire\"].quantile(0.25)\nQ3 = df[\"salaire\"].quantile(0.75)\nIQR = Q3 - Q1\n\n# Détection des outliers (1.5 fois l'IQR en dehors de Q1 et Q3)\noutliers = df[(df[\"salaire\"] < (Q1 - 1.5 * IQR)) | (df[\"salaire\"] > (Q3 + 1.5 * IQR))]\nprint(outliers)"
+    },
+    {
+      "type": "paragraph",
+      "text": "Solution : Remplacer par la médiane ou utiliser une transformation logarithmique."
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fusion et Dédoublonnage des Données",
+      "anchor": "anchor16"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lorsqu'on intègre des données de sources multiples, on doit fusionner et supprimer les doublons."
+    },
+    {
+      "type": "paragraph",
+      "text": "On fusionne deux jeux de données où les identifiants ne sont pas identiques à 100% (merge_asof pour joindre sur des valeurs proches) :"
+    },
+    {
+      "type": "code",
+      "text": "import pandas as pd\n\ndf1 = pd.DataFrame({\"id_client\": [101, 102, 103], \"nom\": [\"Alice\", \"Bob\", \"Charlie\"]})\ndf2 = pd.DataFrame({\"id_client\": [102, 103, 104], \"achat\": [\"Ordinateur\", \"Téléphone\", \"Tablette\"]})\n\n# Fusion basée sur l'ID client\ndf_merged = pd.merge(df1, df2, on=\"id_client\", how=\"outer\")\nprint(df_merged)"
+    },
+    {
+      "type": "paragraph",
+      "text": "Problème classique : Des identifiants mal formatés peuvent empêcher la fusion → On peut normaliser les valeurs avant"
+    },
+    {
+      "type": "paragraph",
+      "text": "Dédoublonnage avancé avec record linkage, On peut identifier des doublons malgré des erreurs typographiques :"
+    },
+    {
+      "type": "code",
+      "text": "import recordlinkage\n\nindexer = recordlinkage.Index()\nindexer.block(\"nom\")  # Bloque sur les valeurs exactes\n\ndf_pairs = indexer.index(df1, df2)\n\n# Comparaison des champs\ncompare = recordlinkage.Compare()\ncompare.string(\"nom\", \"nom\", method=\"jarowinkler\", threshold=0.85)\n\nsimilarities = compare.compute(df_pairs, df1, df2)\nprint(similarities)"
+    },
+    {
+      "type": "paragraph",
+      "text": "Application : Identifier des doublons dans des bases clients"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Standardisation des formats et des unités",
+      "anchor": "anchor17"
+    },
+    {
+      "type": "paragraph",
+      "text": "Quand on intègre des données de sources multiples, on doit harmoniser les formats."
+    },
+    {
+      "type": "paragraph",
+      "text": "Conversion d'unités automatiquement"
+    },
+    {
+      "type": "code",
+      "text": "from forex_python.converter import CurrencyRates\n\nc = CurrencyRates()\nusd_to_eur = c.convert(\"USD\", \"EUR\", 100)\nprint(usd_to_eur)  # Conversion de 100 USD en EUR"
+    },
+    {
+      "type": "paragraph",
+      "text": "Application : Uniformiser les données financières."
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Détection d'Anomalies avec des Méthodes Avancées",
+      "anchor": "anchor18"
+    },
+    {
+      "type": "paragraph",
+      "text": "Au-delà des méthodes statistiques, on peut utiliser des algorithmes ML."
+    },
+    {
+      "type": "paragraph",
+      "text": "Détection avec Isolation Forest"
+    },
+    {
+      "type": "code",
+      "text": "from sklearn.ensemble import IsolationForest\n\ndf = pd.DataFrame({\"valeur\": [10, 12, 13, 200, 15, 11, 14]})\n\niso_forest = IsolationForest(contamination=0.1)\ndf[\"anomalie\"] = iso_forest.fit_predict(df[[\"valeur\"]])\nprint(df)"
+    },
+    {
+      "type": "paragraph",
+      "text": "Application : Détection de fraudes, valeurs suspectes."
     }
+
+
   ]
 }
