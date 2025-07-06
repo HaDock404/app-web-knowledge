@@ -88,6 +88,21 @@
   cursor: pointer;
 }
 
+.article_ul {
+    color: white;
+}
+
+.article_button {
+    background-color: #121422;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.article_button:hover {
+    text-decoration: underline;
+}
+
 @media (max-width : 1190px) and (min-width: 600px) {
     .article_page_section {
         width: calc(100% - 100px);

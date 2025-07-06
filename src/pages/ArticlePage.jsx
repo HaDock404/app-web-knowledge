@@ -33,35 +33,69 @@ const ArticlePage = () => {
     articlepage11: articleData11
   };
 
+  const scrollToAnchor = (anchor) => {
+    const el = document.getElementById(anchor);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+
   const data = articles[articleId];
 
   const renderContentBlock = (block, index) => {
   switch (block.type) {
     case 'heading':
       const HeadingTag = `h${block.level}`;
-      return <HeadingTag className="article_heading" key={index}>{block.text}</HeadingTag>;
+      return (
+        <HeadingTag
+          className="article_heading"
+          id={block.anchor || `heading-${index}`} // si pas d'anchor fourni, fallback unique
+          key={index}
+        >
+          {block.text}
+        </HeadingTag>
+      );
     case 'paragraph':
       return <p className='article_p' key={index}>{block.text}</p>;
     case 'jump':
-      return <div className='article_div'></div>;
+      return <div className='article_div' key={index}></div>;
     case 'image':
-      return <img 
-              className='article_img' 
-              key={index} 
-              src={block.src} 
-              alt={block.alt} />;
+      return (
+        <img 
+          className='article_img' 
+          key={index} 
+          src={block.src} 
+          alt={block.alt} 
+        />
+      );
     case 'code':
       return (
-          <div className='article_code'>
-            {block.text}
-            <CopyingButton text={block.text}/>
-          </div>
-      )
-        
+        <div className='article_code' key={index}>
+          {block.text}
+          <CopyingButton text={block.text}/>
+        </div>
+      );
+    case 'index':
+      return (
+        <div className='article_index' key={index}>
+          <h2 className='article_heading'>Sommaire</h2>
+          <ul className='article_ul'>
+            {block.items.map((item, idx) => (
+              <li key={idx}>
+                <button className='article_button' onClick={() => scrollToAnchor(item.anchor)}>
+                  {item.text}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
     default:
       return null;
   }
 };
+
 
   if (!data) {
     return <div>Article non trouvé</div>;

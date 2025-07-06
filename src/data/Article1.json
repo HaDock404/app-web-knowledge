@@ -7,24 +7,42 @@
       "alt": ""
     },
     {
-      "type": "jump"
+      "type": "index",
+      "items": [
+        { "text": "Introduction", "anchor": "intro" },
+        { "text": "Heading", "anchor": "heading" },
+        { "text": "Code section", "anchor": "code-section" }
+      ]
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "Heading"
+      "text": "Introduction",
+      "anchor": "intro"
+    },
+    {
+      "type": "paragraph",
+      "text": "Introduction to Python."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Heading",
+      "anchor": "heading"
     },
     {
       "type": "paragraph",
       "text": "Lorem machin truc."
     },
     {
-      "type": "code",
-      "text": "Lorem machin truc."
+      "type": "heading",
+      "level": 2,
+      "text": "Code section",
+      "anchor": "code-section"
     },
     {
       "type": "code",
-      "text": "Lorem machin truc.Lorem machin truc.Lorem machin truc.Lorem machin truc. Lorem machin truc. Lorem machin truc.Lorem machin truc. Lorem machin truc."
+      "text": "print('Hello World')"
     }
   ]
 }
