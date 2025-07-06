@@ -3,20 +3,245 @@
   "content": [
     {
       "type": "image",
-      "src": "https://renemages.wordpress.com/wp-content/uploads/2019/07/python-logo.jpg",
+      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMek698YjgnhBKtUXZ2W2xrlCchPoFpJGzOA&s",
       "alt": ""
     },
     {
-      "type": "jump"
+      "type": "index",
+      "items": [
+        { "text": "Installation", "anchor": "anchor0" },
+        { "text": "Authentification", "anchor": "anchor1" },
+        { "text": "Projet", "anchor": "anchor2" },
+        { "text": "Bucket Storage", "anchor": "anchor3" },
+        { "text": "Instances", "anchor": "anchor4" }
+      ]
     },
+
     {
       "type": "heading",
       "level": 2,
-      "text": "Heading"
+      "text": "Installation",
+      "anchor": "anchor0"
     },
     {
       "type": "paragraph",
-      "text": "Lorem machin truc."
+      "text": "Installer le SDK Google Cloud sur la console :"
+    },
+    {
+      "type": "code",
+      "text": "brew install --cask google-cloud-sdk"
+    },
+    {
+      "type": "paragraph",
+      "text": "Initialiser le SDK :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud init"
+    },
+    {
+      "type": "paragraph",
+      "text": "- connection au compte Google"
+    },
+    {
+      "type": "paragraph",
+      "text": "- Sélection du Projet"
+    },
+    {
+      "type": "paragraph",
+      "text": "Vérification de l'installation :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud --version"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Authentification",
+      "anchor": "anchor1"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ajouter le nouveau compte dans le terminal avec gcloud"
+    },
+    {
+      "type": "code",
+      "text": "gcloud auth login"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lister les comptes disponibles"
+    },
+    {
+      "type": "code",
+      "text": "gcloud auth list"
+    },
+    {
+      "type": "paragraph",
+      "text": "Changer de compte"
+    },
+    {
+      "type": "code",
+      "text": "gcloud config set account compte2@exemple.com"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Projet",
+      "anchor": "anchor2"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lister les projets"
+    },
+    {
+      "type": "code",
+      "text": "gcloud config list"
+    },
+    {
+      "type": "paragraph",
+      "text": "Projet actuel"
+    },
+    {
+      "type": "code",
+      "text": "gcloud config get-value project"
+    },
+    {
+      "type": "paragraph",
+      "text": "Changer de projet"
+    },
+    {
+      "type": "code",
+      "text": "gcloud config set project [PROJECT]"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Bucket Storage",
+      "anchor": "anchor3"
+    },
+    {
+      "type": "paragraph",
+      "text": "Activation des API nécessaires :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud services enable storage.googleapis.com"
+    },
+    {
+      "type": "paragraph",
+      "text": "Vérifier la disponibilité d'un nom de Bucket :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud storage buckets list --filter=\"name:bucket-name\""
+    },
+    {
+      "type": "paragraph",
+      "text": "Créer un bucket de stockage :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud storage buckets create gs://mon-datalake --location=europe-west9\n# europe-west9 = Paris\n#northamerica-northeast1 = Montréal"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lister les buckets :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud storage buckets list"
+    },
+    {
+      "type": "paragraph",
+      "text": "Envoyer un fichier dans un Bucket :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud storage cp mon_fichier.csv gs://mon-bucket/"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lister les fichiers du Bucket :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud storage ls gs://mon-bucket/"
+    },
+    {
+      "type": "paragraph",
+      "text": "Télécharger un fichier :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud storage cp gs://mon-datalake/mon_fichier.csv ."
+    },
+    {
+      "type": "paragraph",
+      "text": "Supprimer un fichier :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud storage rm gs://mon-datalake/mon_fichier.csv"
+    },
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Instances",
+      "anchor": "anchor4"
+    },
+    {
+      "type": "paragraph",
+      "text": "Activer le service Compute Engine :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud services enable compute.googleapis.com"
+    },
+    {
+      "type": "paragraph",
+      "text": "Créer une instance VM"
+    },
+    {
+      "type": "code",
+      "text": "gcloud compute instances create nom-de-ton-instance --zone=europe-west1-b --machine-type=e2-medium --image-project=debian-cloud --image-family=debian-11 --boot-disk-size=20GB"
+    },
+    {
+      "type": "paragraph",
+      "text": "Vérifier que l'instance a bien été créée :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud compute instances list"
+    },
+    {
+      "type": "paragraph",
+      "text": "Se connecter à l’instance via SSH :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud compute ssh nom-de-ton-instance --zone=europe-west1-b"
+    },
+    {
+      "type": "paragraph",
+      "text": "Arrêter l'instance :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud compute instances stop nom-de-ton-instance --zone=europe-west1-b"
+    },
+    {
+      "type": "paragraph",
+      "text": "Supprimer l'instance :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud compute instances delete nom-de-ton-instance --zone=europe-west1-b"
     }
   ]
 }
