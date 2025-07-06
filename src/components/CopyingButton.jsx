@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import '../styles/article.css'
 
 
 function CopyingButton({ text }) {

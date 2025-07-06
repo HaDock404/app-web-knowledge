@@ -48,7 +48,7 @@
 }
 
 .body_homepage_article_header_search {
-    background-color: #17192b;
+    background-color: #141827;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 0px;
@@ -57,11 +57,11 @@
     height: 40px;
     width: 170px;
     border: none;
-    
+    color: white;
 }
 
 .body_homepage_article_header_search_button {
-    background-color: #17192b;
+    background-color: #141827;
     cursor: pointer;
     border-radius: 20px;
     border: none;

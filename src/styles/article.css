@@ -66,9 +66,26 @@
 }
 
 .article_code {
-    width: 300px;
-    height: 100px;
-    background-color: red;
+    width: calc(100% - 110px);
+    height: auto;
+    background-color: black;
+    border-radius: 10px;
+    color: white;
+    padding: 20px;
+    position: relative;
+    margin-bottom: 10px;
+    padding-right: 90px;
+}
+
+.modal-placement-button-copy-content {
+  background-color: white;
+  color: #000000;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
 @media (max-width : 1190px) and (min-width: 600px) {
