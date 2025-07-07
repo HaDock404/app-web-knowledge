@@ -3,20 +3,102 @@
   "content": [
     {
       "type": "image",
-      "src": "https://renemages.wordpress.com/wp-content/uploads/2019/07/python-logo.jpg",
+      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO_zAeFKx1iw_cF_Md2KQPodPj_Bsl3E5PTg&s",
       "alt": ""
     },
     {
-      "type": "jump"
+      "type": "index",
+      "items": [
+        { "text": "Virtual environnement", "anchor": "anchor0" },
+        { "text": "Réaliser l'enregistrement des librairies de l'environnement pour une utilisation ultérieur", "anchor": "anchor1" },
+        { "text": "Installation des bibliothèques dans un nouvel environnement", "anchor": "anchor2" }
+      ]
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "Heading"
+      "text": "Virtual environnement",
+      "anchor": "anchor0"
     },
     {
       "type": "paragraph",
-      "text": "Lorem machin truc."
+      "text": "L'objectif d'un environnement virtuel est d'avoir un environnement qui ne sera pas affecté par les librairies inutiles dans un projet qui pourrait influencer le bon fonctionnement des programmes. Et pous également supprimer facilement toutes les librairies d'un projet une fois celui ci terminé"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lister les environnements virtuels :"
+    },
+    {
+      "type": "code",
+      "text": "conda env list"
+    },
+    {
+      "type": "paragraph",
+      "text": "Supprimer default base:"
+    },
+    {
+      "type": "code",
+      "text": "conda config --set auto_activate_base false"
+    },
+    {
+      "type": "paragraph",
+      "text": "Créer un nouvelle environnement virtuel :"
+    },
+    {
+      "type": "code",
+      "text": "conda create —-name NomDuProjet python=3.10.9"
+    },
+    {
+      "type": "paragraph",
+      "text": "Activer l’environnement virtuel :"
+    },
+    {
+      "type": "code",
+      "text": "conda activate NomDuProjet"
+    },
+    {
+      "type": "paragraph",
+      "text": "Supprimer un environnement"
+    },
+    {
+      "type": "code",
+      "text": "conda remove --name NomDuProjet --all"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Réaliser l'enregistrement des librairies de l'environnement pour une utilisation ultérieur",
+      "anchor": "anchor1"
+    },
+    {
+      "type": "paragraph",
+      "text": "Nous pouvons stocker la liste des bibliothèques dans un fichier requirements.txt pour les ré-utiliser ailleurs en les installant avec la même version."
+    },
+    {
+      "type": "paragraph",
+      "text": "Avec conda faire la commande spécial :"
+    },
+    {
+      "type": "code",
+      "text": "pip list --format=freeze --local > requirements.txt"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sinon faire simplement :"
+    },
+    {
+      "type": "code",
+      "text": "pip freeze > requirements.txt"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Installation des bibliothèques dans un nouvel environnement",
+      "anchor": "anchor2"
+    },
+    {
+      "type": "code",
+      "text": "pip install -r requirements.txt"
     }
   ]
 }
