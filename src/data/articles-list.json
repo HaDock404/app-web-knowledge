@@ -86,5 +86,13 @@
     "tags": ["github action"],
     "data_article":"../data/Article11.json",
     "url_path":"/article/articlepage11"
+  },
+  {
+    "id": "a0011",
+    "article_name": "Memgraph",
+    "article_img":"https://careerdate.fer.hr/wp-content/uploads/2018/11/Memgraph-logo-gradient-cmyk-1876x938.jpg",
+    "tags": ["memgraph"],
+    "data_article":"../data/Article12.json",
+    "url_path":"/article/articlepage12"
   }
 ]

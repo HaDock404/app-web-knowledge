@@ -1,0 +1,73 @@
+{
+  "title": "Memgraph",
+  "content": [
+    {
+      "type": "image",
+      "src": "https://careerdate.fer.hr/wp-content/uploads/2018/11/Memgraph-logo-gradient-cmyk-1876x938.jpg",
+      "alt": ""
+    },
+    {
+      "type": "index",
+      "items": [
+        { "text": "Memgraph", "anchor": "anchor0" },
+        { "text": "Installation", "anchor": "anchor1" },
+        { "text": "Connection à la DB", "anchor": "anchor2" }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Memgraph",
+      "anchor": "anchor0"
+    },
+
+    {
+      "type": "paragraph",
+      "text": "Memgraph est une base de données orientée graphes en mémoire, très rapide, compatible avec Cypher (le langage de requêtes pour graphes popularisé par Neo4j)."
+    },
+    {
+      "type": "paragraph",
+      "text": "Un graphe est composé de nœuds (nodes), qui sont des entités comme des personnes ou des sociétés. Il est composé de relations (relationships), qui sont des liens entre nœuds comme AMI_DE, TRAVAILLE_POUR. Et enfin de propriétés (properties) qui sont des informations attachées aux nœuds ou relations, comme le nom ou l'âge."
+    },
+    {
+      "type": "paragraph",
+      "text": "Memgraph est utilisé grâce à Cypher, un langage qui permet de créer des nœuds et relations, d'interroger le graphe et de mettre à jour ou supprimer des éléments."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Installation",
+      "anchor": "anchor1"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lorsque l'on souhaite essayer Memgraph Platform (Memgraph database + MAGE library + Memgraph Lab) on doit télécharger le fichier Docker Compose."
+    },
+    {
+      "type": "code",
+      "text": "curl https://install.memgraph.com | sh"
+    },
+    {
+      "type": "paragraph",
+      "text": "puis lancer le container"
+    },
+    {
+      "type": "code",
+      "text": "docker run -p 7687:7687 -p 3000:3000 memgraph/memgraph-platform"
+    },
+    {
+      "type": "paragraph",
+      "text": "Memgraph DB sera disponible sur le port 7687 et le Lab sur http://localhost:3000"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Connection à la DB",
+      "anchor": "anchor1"
+    },
+    {
+      "type": "paragraph",
+      "text": "Memgraph DB sera disponible sur le port 7687 et le Lab sur http://localhost:3000"
+    }
+  ]
+}

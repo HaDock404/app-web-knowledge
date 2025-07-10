@@ -11,6 +11,7 @@ import articleData8 from '../data/Article8.json';
 import articleData9 from '../data/Article9.json';
 import articleData10 from '../data/Article10.json';
 import articleData11 from '../data/Article11.json';
+import articleData12 from '../data/Article12.json';
 
 import "../styles/article.css";
 import Header from '../components/Header';
@@ -30,7 +31,8 @@ const ArticlePage = () => {
     articlepage8: articleData8,
     articlepage9: articleData9,
     articlepage10: articleData10,
-    articlepage11: articleData11
+    articlepage11: articleData11,
+    articlepage12: articleData12
   };
 
   const scrollToAnchor = (anchor) => {
