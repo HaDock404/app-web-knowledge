@@ -11,16 +11,20 @@
       "items": [
         { "text": "Memgraph", "anchor": "anchor0" },
         { "text": "Installation", "anchor": "anchor1" },
-        { "text": "Connection à la DB", "anchor": "anchor2" }
+        { "text": "Usage de Docker Compose", "anchor": "anchor2" },
+        { "text": "Accès à la base de données Memgraph", "anchor": "anchor3" },
+        { "text": "Importation de données", "anchor": "anchor4" },
+        { "text": "Naviguer dans la base avec Cypher", "anchor": "anchor5" }
       ]
     },
+
+
     {
       "type": "heading",
       "level": 2,
       "text": "Memgraph",
       "anchor": "anchor0"
     },
-
     {
       "type": "paragraph",
       "text": "Memgraph est une base de données orientée graphes en mémoire, très rapide, compatible avec Cypher (le langage de requêtes pour graphes popularisé par Neo4j)."
@@ -33,6 +37,8 @@
       "type": "paragraph",
       "text": "Memgraph est utilisé grâce à Cypher, un langage qui permet de créer des nœuds et relations, d'interroger le graphe et de mettre à jour ou supprimer des éléments."
     },
+
+
     {
       "type": "heading",
       "level": 2,
@@ -49,25 +55,163 @@
     },
     {
       "type": "paragraph",
-      "text": "puis lancer le container"
+      "text": "Memgraph Lab sera disponible sur http://localhost:3000. Cliquer sur Connect pour accéder à l'interface de memgraph."
     },
-    {
-      "type": "code",
-      "text": "docker run -p 7687:7687 -p 3000:3000 memgraph/memgraph-platform"
-    },
-    {
-      "type": "paragraph",
-      "text": "Memgraph DB sera disponible sur le port 7687 et le Lab sur http://localhost:3000"
-    },
+
+
     {
       "type": "heading",
       "level": 2,
-      "text": "Connection à la DB",
-      "anchor": "anchor1"
+      "text": "Usage de Docker Compose",
+      "anchor": "anchor2"
     },
     {
       "type": "paragraph",
-      "text": "Memgraph DB sera disponible sur le port 7687 et le Lab sur http://localhost:3000"
+      "text": "Pour relancer le Container lorsqu'il est arrêté :"
+    },
+    {
+      "type": "code",
+      "text": "cd ~/memgraph-platform\ndocker compose up -d"
+    },
+    {
+      "type": "paragraph",
+      "text": "Cela va relancer memgraph (la base de données) et memgraph-lab (l'interface Web)"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pour tout arrêter :"
+    },
+    {
+      "type": "code",
+      "text": "cd ~/memgraph-platform\ndocker compose down"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Accès à la base de données Memgraph",
+      "anchor": "anchor3"
+    },
+    {
+      "type": "paragraph",
+      "text": "On peut se connecter à la base de données directement via le navigateur à cette adresse : http://localhost:3000"
+    },
+    {
+      "type": "paragraph",
+      "text": "Avec le client CLI officiel mgconsole, mais il n'est pas installé par défaut. Pour cela il faut entrer dans le conteneur Docker :"
+    },
+    {
+      "type": "code",
+      "text": "docker exec -it memgraph-mage mgconsole"
+    },
+    {
+      "type": "paragraph",
+      "text": "Avec DBeaver (via le plugin Bolt) : bolt://localhost:7687"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Importation de données",
+      "anchor": "anchor4"
+    },
+    {
+      "type": "paragraph",
+      "text": "Créer manuellement un dossier et copier le fichier"
+    },
+    {
+      "type": "code",
+      "text": "docker exec -it memgraph-mage bash # Pas nécessaire commande pour accéder au conteneur\ndocker cp fichier.csv memgraph-mage:/var/lib/memgraph/fichier.csv"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exécuter une requête pour importer les données et créer un noeud pour chaque individu :"
+    },
+    {
+      "type": "code",
+      "text": "LOAD CSV FROM \"/var/lib/memgraph/fichier.csv\" WITH HEADER AS row\nCREATE (:Node_name {id: to_integer(row.id), name: row.name, value1: to_integer(row.value1)});"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exécuter une requête pour importer les données en groupant les noeuds ayant les mêmes caractéristiques :"
+    },
+    {
+      "type": "code",
+      "text": "LOAD CSV FROM \"/var/lib/memgraph/fichier.csv\" WITH HEADER AS row\nMERGE (a:Node_name1 {value: row.value})\nON CREATE SET a.value_description = row.value_description\nMERGE (b:Node_name2 {value2: row.value2})\nON CREATE SET j.value2_description = row.value2_description\nMERGE (c:Node_name3 {value3: row.value3})\nON CREATE SET c.value3_description = row.value3_description;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exécuter une requête pour importer les données en groupant les noeuds ayant les mêmes caractéristiques et en ajoutant des relations entre les nœuds:"
+    },
+    {
+      "type": "code",
+      "text": "LOAD CSV FROM \"/var/lib/memgraph/fichier.csv\" WITH HEADER AS row\nMERGE (a:Node_name1 {value: row.value})\nON CREATE SET a.value_description = row.value_description\nMERGE (b:Node_name2 {value2: row.value2})\nON CREATE SET j.value2_description = row.value2_description\nMERGE (c:Node_name3 {value3: row.value3})\nON CREATE SET c.value3_description = row.value3_description;\nMERGE (b)-[:PERFORMS]->(a)\nMERGE (a)-[:REQUIRES]->(c);"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Naviguer dans la base avec Cypher",
+      "anchor": "anchor5"
+    },
+    {
+      "type": "paragraph",
+      "text": "Afficher tous les nœuds"
+    },
+    {
+      "type": "code",
+      "text": "MATCH (n) RETURN n;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Afficher tous les nœuds d’un certain type (label)"
+    },
+    {
+      "type": "code",
+      "text": "MATCH (p:Node_name) RETURN p;"
+    },
+    {
+      "type": "paragraph",
+      "text": "filtrer sur des valeurs"
+    },
+    {
+      "type": "code",
+      "text": "MATCH (p:Node_name)\nWHERE p.value > 30\nRETURN p;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Afficher les propriétés d’un nœud"
+    },
+    {
+      "type": "code",
+      "text": "MATCH (p:Node_name) RETURN p.value1, p.value2;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Créer une relation entre deux noeux"
+    },
+    {
+      "type": "code",
+      "text": "MATCH (a:Node_name {value1: \"value1\"}), (b:value1 {name: \"value2\"})\nCREATE (a)-[:KNOWS]->(b);"
+    },
+    {
+      "type": "paragraph",
+      "text": "Afficher les relations"
+    },
+    {
+      "type": "code",
+      "text": "MATCH (a)-[r]->(b)\nRETURN a, r, b;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Supprimer les données"
+    },
+    {
+      "type": "code",
+      "text": "MATCH (n) DETACH DELETE n;"
     }
   ]
 }
