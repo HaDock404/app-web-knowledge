@@ -139,7 +139,7 @@
     },
     {
       "type": "code",
-      "text": "LOAD CSV FROM \"/var/lib/memgraph/fichier.csv\" WITH HEADER AS row\nMERGE (a:Node_name1 {value: row.value})\nON CREATE SET a.value_description = row.value_description\nMERGE (b:Node_name2 {value2: row.value2})\nON CREATE SET j.value2_description = row.value2_description\nMERGE (c:Node_name3 {value3: row.value3})\nON CREATE SET c.value3_description = row.value3_description;"
+      "text": "LOAD CSV FROM \"/var/lib/memgraph/fichier.csv\" WITH HEADER AS row\nMERGE (a:Node_name1 {value: row.value})\nON CREATE SET a.value_description = row.value_description\nMERGE (b:Node_name2 {value2: row.value2})\nON CREATE SET b.value2_description = row.value2_description\nMERGE (c:Node_name3 {value3: row.value3})\nON CREATE SET c.value3_description = row.value3_description;"
     },
     {
       "type": "paragraph",
@@ -147,7 +147,7 @@
     },
     {
       "type": "code",
-      "text": "LOAD CSV FROM \"/var/lib/memgraph/fichier.csv\" WITH HEADER AS row\nMERGE (a:Node_name1 {value: row.value})\nON CREATE SET a.value_description = row.value_description\nMERGE (b:Node_name2 {value2: row.value2})\nON CREATE SET j.value2_description = row.value2_description\nMERGE (c:Node_name3 {value3: row.value3})\nON CREATE SET c.value3_description = row.value3_description;\nMERGE (b)-[:PERFORMS]->(a)\nMERGE (a)-[:REQUIRES]->(c);"
+      "text": "LOAD CSV FROM \"/var/lib/memgraph/fichier.csv\" WITH HEADER AS row\nWITH row\nMERGE (a:Node_name1 {value: row.value})\nON CREATE SET a.value_description = row.value_description\nMERGE (b:Node_name2 {value2: row.value2})\nON CREATE SET b.value2_description = row.value2_description\nMERGE (c:Node_name3 {value3: row.value3})\nON CREATE SET c.value3_description = row.value3_description;\nMERGE (b)-[:PERFORMS]->(a)\nMERGE (a)-[:REQUIRES]->(c);"
     },
 
 
@@ -164,6 +164,14 @@
     {
       "type": "code",
       "text": "MATCH (n) RETURN n;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Affiche tous les noeuds et leurs relations"
+    },
+    {
+      "type": "code",
+      "text": "MATCH (n)\nOPTIONAL MATCH (n)-[r]->(m)\nRETURN n, r, m;"
     },
     {
       "type": "paragraph",
