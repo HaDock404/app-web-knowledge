@@ -73,7 +73,7 @@
   },
   {
     "id": "a0009",
-    "article_name": "Gitlab",
+    "article_name": "Gitlab Server",
     "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFKg9m11etTIsPzyFsrUawOJDGAiABkEtF5w&s",
     "tags": ["gitlab"],
     "data_article":"../data/Article10.json",

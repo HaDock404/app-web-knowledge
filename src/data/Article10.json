@@ -1,22 +1,268 @@
 {
-  "title": "Gitlab",
+  "title": "Gitlab Server",
   "content": [
     {
       "type": "image",
-      "src": "https://renemages.wordpress.com/wp-content/uploads/2019/07/python-logo.jpg",
+      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFKg9m11etTIsPzyFsrUawOJDGAiABkEtF5w&s",
       "alt": ""
     },
     {
-      "type": "jump"
+      "type": "index",
+      "items": [
+        { "text": "Création du serveur GitLab", "anchor": "anchor0" },
+        { "text": "Configuration GitLab", "anchor": "anchor1" },
+        { "text": "Vérifier le fonctionnement", "anchor": "anchor2" },
+        { "text": "Configuration de l’accès local", "anchor": "anchor3" },
+        { "text": "Récupération du mot de passe root GitLab", "anchor": "anchor4" },
+        { "text": "Création du GitLab Runner", "anchor": "anchor5" },
+        { "text": "Tester le Runner", "anchor": "anchor6" }
+        
+        
+      ]
     },
+
+
     {
       "type": "heading",
       "level": 2,
-      "text": "Heading"
+      "text": "Création du serveur GitLab",
+      "anchor": "anchor0"
     },
     {
       "type": "paragraph",
-      "text": "Lorem machin truc."
+      "text": "Création des volumes persistants, ces volumes conservent toutes les données GitLab même après arrêt/redémarrage du conteneur :"
+    },
+    {
+      "type": "code",
+      "text": "sudo mkdir -p /srv/gitlab/config /srv/gitlab/logs /srv/gitlab/data"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lancer GitLab avec Docker :"
+    },
+    {
+      "type": "code",
+      "text": "sudo docker run --detach \n--hostname 0xhadock.gitlab.com \n--publish 443:443 --publish 8088:80 --publish 2022:22 \n--name gitlab \n--restart always \n--volume /srv/gitlab/config:/etc/gitlab \n--volume /srv/gitlab/logs:/var/log/gitlab \n--volume /srv/gitlab/data:/var/opt/gitlab \n--network host \ngitlab/gitlab-ee:latest"
+    },
+    {
+      "type": "paragraph",
+      "text": "--network host simplifie le réseau (optionnel, sinon gérer les ports explicitement)."
+    },
+    {
+      "type": "paragraph",
+      "text": "Les ports exposés :"
+    },
+    {
+      "type": "code",
+      "text": "8088 : HTTP GitLab\n443 : HTTPS GitLab (à activer plus tard si besoin)\n2022 : SSH Git"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Configuration GitLab",
+      "anchor": "anchor1"
+    },
+    {
+      "type": "paragraph",
+      "text": "Modifier le fichier de configuration :"
+    },
+    {
+      "type": "code",
+      "text": "sudo nano /srv/gitlab/config/gitlab.rb"
+    },
+    {
+      "type": "paragraph",
+      "text": "Changer les lignes :"
+    },
+    {
+      "type": "code",
+      "text": "gitlab_rails['gitlab_shell_ssh_port'] = 2022\nexternal_url \"http://0xhadock.gitlab.com:8088\""
+    },
+    {
+      "type": "paragraph",
+      "text": "Appliquer les changements :"
+    },
+    {
+      "type": "code",
+      "text": "sudo docker exec -it gitlab gitlab-ctl reconfigure"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Vérifier le fonctionnement",
+      "anchor": "anchor2"
+    },
+    {
+      "type": "paragraph",
+      "text": "Vérifier l’adresse IP du conteneur :"
+    },
+    {
+      "type": "code",
+      "text": "sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' gitlab"
+    },
+    {
+      "type": "paragraph",
+      "text": "Tester :"
+    },
+    {
+      "type": "code",
+      "text": "curl -I http://<ip>:8088"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Configuration de l’accès local",
+      "anchor": "anchor3"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ligne de commande :"
+    },
+    {
+      "type": "code",
+      "text": "sudo vim /etc/hosts"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ajouter :"
+    },
+    {
+      "type": "code",
+      "text": "192.168.0.20  0xhadock.gitlab.com"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Récupération du mot de passe root GitLab",
+      "anchor": "anchor4"
+    },
+    {
+      "type": "code",
+      "text": "sudo cat /srv/gitlab/config/initial_root_password"
+    },
+    {
+      "type": "paragraph",
+      "text": "Puis se connecter sur :"
+    },
+    {
+      "type": "code",
+      "text": "http://0xhadock.gitlab.com:8088"
+    },
+    {
+      "type": "paragraph",
+      "text": "Connection avec root et le mot de passe récupéré."
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Création du GitLab Runner",
+      "anchor": "anchor5"
+    },
+    {
+      "type": "paragraph",
+      "text": "Créer le runner dans GitLab en allant dans :"
+    },
+    {
+      "type": "code",
+      "text": "Settings > CI/CD > Runners > Set up a specific Runner manually"
+    },
+    {
+      "type": "paragraph",
+      "text": "Noter l’URL de l’instance et le token d’enregistrement."
+    },
+    {
+      "type": "paragraph",
+      "text": "Lancer le GitLab Runner Docker :"
+    },
+    {
+      "type": "code",
+      "text": "sudo docker run -d --name gitlab-runner \n--restart always \\n--add-host 0xhadock.gitlab.com:192.168.0.20 \n-v /srv/gitlab-runner/config:/etc/gitlab-runner \n-v /var/run/docker.sock:/var/run/docker.sock \\ngitlab/gitlab-runner:latest"
+    },
+    {
+      "type": "paragraph",
+      "text": "Enregistrer le Runner"
+    },
+    {
+      "type": "code",
+      "text": "sudo docker exec -it gitlab-runner gitlab-runner register"
+    },
+    {
+      "type": "paragraph",
+      "text": "Renseigner :"
+    },
+    {
+      "type": "code",
+      "text": "URL : http://0xhadock.gitlab.com:8088\nToken : (token GitLab)\nDescription : runner_00\nTags : runner_00\nExecutor : docker\nImage par défaut : debian:latest ou docker:latest selon les besoins."
+    },
+    {
+      "type": "paragraph",
+      "text": "Modifier le fichier de configuration si nécessaire :"
+    },
+    {
+      "type": "code",
+      "text": "sudo docker exec -it gitlab-runner /bin/bash"
+    },
+    {
+      "type": "paragraph",
+      "text": "Installer vim :"
+    },
+    {
+      "type": "code",
+      "text": "apt-get update && apt-get install -y vim"
+    },
+    {
+      "type": "paragraph",
+      "text": "Modifier :"
+    },
+    {
+      "type": "code",
+      "text": "vim /etc/gitlab-runner/config.toml"
+    },
+    {
+      "type": "paragraph",
+      "text": "Vérifier :"
+    },
+    {
+      "type": "code",
+      "text": "privileged = true\nvolumes = [\"/cache\", \"/var/run/docker.sock:/var/run/docker.sock\"]\nextra_hosts = [\"0xhadock.gitlab.com:192.168.0.20\"]"
+    },
+    {
+      "type": "paragraph",
+      "text": "Puis redémarrer le runner :"
+    },
+    {
+      "type": "code",
+      "text": "sudo docker restart gitlab-runner"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Tester le Runner",
+      "anchor": "anchor6"
+    },
+    {
+      "type": "paragraph",
+      "text": "Crée un .gitlab-ci.yml dans un repo :"
+    },
+    {
+      "type": "code",
+      "text": "stages:\n- test\n\ntest-job:\n   stage: test\n   tags:\n       - runner_00\n   script:\n       - echo \"Start ..\"\n       - sleep 60\n       - echo \"End!\""
+    },
+    {
+      "type": "paragraph",
+      "text": "Push sur le repo GitLab et vérifier que le job s’exécute sur le runner."
     }
   ]
 }

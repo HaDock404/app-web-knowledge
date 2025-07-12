@@ -15,6 +15,7 @@ import articleData12 from '../data/Article12.json';
 
 import "../styles/article.css";
 import Header from '../components/Header';
+import Footer from '../components/Footer'
 import CopyingButton from '../components/CopyingButton'
 
 const ArticlePage = () => {
@@ -110,6 +111,7 @@ const ArticlePage = () => {
         <h1 className='article_h1'>{data.title}</h1>
         {data.content.map((block, index) => renderContentBlock(block, index))}
       </section>
+      <Footer />
     </section>
   );
 };
