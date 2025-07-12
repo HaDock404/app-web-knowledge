@@ -3,20 +3,380 @@
   "content": [
     {
       "type": "image",
-      "src": "https://renemages.wordpress.com/wp-content/uploads/2019/07/python-logo.jpg",
+      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdd25hyNQOMs4Xx1Cv_A_oaT0zagfSWlXMBA&s",
       "alt": ""
     },
     {
-      "type": "jump"
+      "type": "index",
+      "items": [
+        { "text": "Introduction", "anchor": "anchor0" },
+        { "text": "Installation", "anchor": "anchor1" },
+        { "text": "Configuration initiale", "anchor": "anchor2" },
+        { "text": "Créer un dépôt Git", "anchor": "anchor3" },
+        { "text": "Commandes de base", "anchor": "anchor4" },
+        { "text": "Gérer les modifications", "anchor": "anchor5" },
+        { "text": "Gestion des branches", "anchor": "anchor6" },
+        { "text": "Travailler avec un dépôt distant", "anchor": "anchor7" },
+        { "text": "Commandes utiles", "anchor": "anchor8" }
+
+        
+      ]
     },
+
+
     {
       "type": "heading",
       "level": 2,
-      "text": "Heading"
+      "text": "Introduction",
+      "anchor": "anchor0"
     },
     {
       "type": "paragraph",
-      "text": "Lorem machin truc."
+      "text": "Git est un logiciel de gestion de versions distribué créé par Linus Torvalds en 2005. Il permet de suivre les modifications de fichiers dans un projet de revenir à un état précédent en cas d'erreur et de travailler à plusieurs sur le même projet de manière efficace."
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Installation",
+      "anchor": "anchor1"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sur Mac :"
+    },
+    {
+      "type": "code",
+      "text": "brew install git"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sur Linux (Debian/Ubuntu) :"
+    },
+    {
+      "type": "code",
+      "text": "sudo apt update\nsudo apt install git"
+    },
+
+
+     {
+      "type": "heading",
+      "level": 2,
+      "text": "Configuration initiale",
+      "anchor": "anchor2"
+    },
+    {
+      "type": "paragraph",
+      "text": "À faire la première fois :"
+    },
+    {
+      "type": "code",
+      "text": "git config --global user.name \"Mon Nom\"\ngit config --global user.email \"monemail@example.com\"\ngit config --global core.editor \"nano\" # ou \"vim\", \"code\"...\ngit config --global init.defaultBranch main"
+    },
+    {
+      "type": "paragraph",
+      "text": "Et pour vérifier la configuration :"
+    },
+    {
+      "type": "code",
+      "text": "git config --list"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Créer un dépôt Git",
+      "anchor": "anchor3"
+    },
+    {
+      "type": "paragraph",
+      "text": "Initialiser un nouveau projet :"
+    },
+    {
+      "type": "code",
+      "text": "mkdir mon_projet\ncd mon_projet\ngit init"
+    },
+    {
+      "type": "paragraph",
+      "text": "Cloner un projet existant :"
+    },
+    {
+      "type": "code",
+      "text": "git clone https://github.com/utilisateur/projet.git"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Commandes de base",
+      "anchor": "anchor4"
+    },
+    {
+      "type": "paragraph",
+      "text": "Vérifier l’état du dépôt :"
+    },
+    {
+      "type": "code",
+      "text": "git status"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ajouter des fichiers à la zone de staging :"
+    },
+    {
+      "type": "code",
+      "text": "git add fichier.txt        # ajouter un fichier\ngit add .                  # ajouter tous les fichiers modifiés"
+    },
+    {
+      "type": "paragraph",
+      "text": "Valider (commit) les modifications :"
+    },
+    {
+      "type": "code",
+      "text": "git commit -m \"Message clair et descriptif\""
+    },
+    {
+      "type": "paragraph",
+      "text": "Voir l’historique des commits :"
+    },
+    {
+      "type": "code",
+      "text": "git log\ngit log --oneline          # résumé\ngit log --graph --oneline  # visualiser l'arbre"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Gérer les modifications",
+      "anchor": "anchor5"
+    },
+    {
+      "type": "paragraph",
+      "text": "Modifier un fichier, puis vérifier les différences :"
+    },
+    {
+      "type": "code",
+      "text": "git diff                   # différences non ajoutées\ngit diff --staged          # différences dans la zone de staging"
+    },
+    {
+      "type": "paragraph",
+      "text": "Retirer un fichier de la zone de staging :"
+    },
+    {
+      "type": "code",
+      "text": "git reset HEAD fichier.txt"
+    },
+    {
+      "type": "paragraph",
+      "text": "Revenir à la dernière version d’un fichier :"
+    },
+    {
+      "type": "code",
+      "text": "git checkout -- fichier.txt"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Gestion des branches",
+      "anchor": "anchor6"
+    },
+    {
+      "type": "paragraph",
+      "text": "Créer une branche :"
+    },
+    {
+      "type": "code",
+      "text": "git branch nouvelle_branche"
+    },
+    {
+      "type": "paragraph",
+      "text": "Changer de branche :"
+    },
+    {
+      "type": "code",
+      "text": "git checkout nouvelle_branche"
+    },
+    {
+      "type": "paragraph",
+      "text": "Créer et changer directement de branche :"
+    },
+    {
+      "type": "code",
+      "text": "git checkout -b nouvelle_branche"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lister les branches :"
+    },
+    {
+      "type": "code",
+      "text": "git branch"
+    },
+    {
+      "type": "paragraph",
+      "text": "Fusionner une branche dans la branche courante :"
+    },
+    {
+      "type": "code",
+      "text": "git merge autre_branche"
+    },
+    {
+      "type": "paragraph",
+      "text": "Supprimer une branche :"
+    },
+    {
+      "type": "code",
+      "text": "git branch -d ancienne_branche"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Travailler avec un dépôt distant",
+      "anchor": "anchor7"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ajouter un dépôt distant :"
+    },
+    {
+      "type": "code",
+      "text": "git remote add origin https://github.com/utilisateur/projet.git"
+    },
+    {
+      "type": "paragraph",
+      "text": "Vérifier les dépôts distants :"
+    },
+    {
+      "type": "code",
+      "text": "git remote -v"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pousser les modifications :"
+    },
+    {
+      "type": "code",
+      "text": "git push origin main"
+    },
+    {
+      "type": "paragraph",
+      "text": "ou pour pousser une branche spécifique :"
+    },
+    {
+      "type": "code",
+      "text": "git push -u origin ma_branche"
+    },
+    {
+      "type": "paragraph",
+      "text": "Récupérer les modifications du dépôt distant :"
+    },
+    {
+      "type": "code",
+      "text": "git pull origin main"
+    },
+    {
+      "type": "paragraph",
+      "text": "Récupérer les informations sans fusionner automatiquement :"
+    },
+    {
+      "type": "code",
+      "text": "git fetch"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Commandes utiles",
+      "anchor": "anchor8"
+    },
+    {
+      "type": "paragraph",
+      "text": "Modifier le dernier commit (message ou ajout de fichier) :"
+    },
+    {
+      "type": "code",
+      "text": "git commit --amend"
+    },
+    {
+      "type": "paragraph",
+      "text": "Voir qui a modifié chaque ligne d'un fichier :"
+    },
+    {
+      "type": "code",
+      "text": "git blame fichier.txt"
+    },
+    {
+      "type": "paragraph",
+      "text": "Supprimer un fichier et enregistrer la suppression :"
+    },
+    {
+      "type": "code",
+      "text": "git rm fichier.txt\ngit commit -m \"Supprime fichier.txt\""
+    },
+    {
+      "type": "paragraph",
+      "text": "Renommer un fichier :"
+    },
+    {
+      "type": "code",
+      "text": "git mv ancien_nom.txt nouveau_nom.txt\ngit commit -m \"Renomme fichier\""
+    },
+    {
+      "type": "paragraph",
+      "text": "Supprimer un push avec fichier volumineux :"
+    },
+    {
+      "type": "code",
+      "text": "git log\ngit reset --soft <commit_id>\ngit rm --cached path/to/largefile"
+    },
+    {
+      "type": "paragraph",
+      "text": "Annuler un commit :"
+    },
+    {
+      "type": "code",
+      "text": "git reset"
+    },
+    {
+      "type": "paragraph",
+      "text": "Retourner au commit précédent :"
+    },
+    {
+      "type": "code",
+      "text": "git reset --soft HEAD^"
+    },
+    {
+      "type": "paragraph",
+      "text": "Enlever des fichiers du commit :"
+    },
+    {
+      "type": "code",
+      "text": "git rm -cached /chemin/fichier"
+    },
+    {
+      "type": "paragraph",
+      "text": "Supprimer une origine :"
+    },
+    {
+      "type": "code",
+      "text": "cd project\ngit remote remove origin\ngit remote add origin https://github.com/HaDock404/NomDuNouveauProjet.git\ngit push -u origin main"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ajouter un tag :"
+    },
+    {
+      "type": "code",
+      "text": "git tag v1.0.0\ngit push origin v1.0.0"
     }
   ]
 }
