@@ -6,7 +6,7 @@ header {
 .header_nav {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 0 50px;
     box-sizing: border-box;
@@ -30,13 +30,13 @@ header {
     transition: all 0.3s ease;
 }
 
-.erwin_logo {
+.logo {
     width: 40px;
     height: 40px;
     margin-left: 20px;
 }
 
-.erwin_logo img {
+.logo img {
     width: auto;
     height: 100%;
 }
@@ -54,8 +54,6 @@ header {
     box-shadow: 4px 4px 8px 0px #0d0f21;
     transform: translateY(-2px);
 }
-
-
 
 .lang-menu {
     display: flex;

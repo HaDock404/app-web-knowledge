@@ -9,7 +9,7 @@ function Header() {
         <header>
             <nav className='header_nav'>
                 <Link to="/" className='home_logo'>
-                    <div className='erwin_logo'>
+                    <div className='logo'>
                         <img src={Logo} alt="" />
                     </div>
                     <div className='home_logo_x'>Knowledge Base</div>     
