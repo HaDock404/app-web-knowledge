@@ -3,20 +3,358 @@
   "content": [
     {
       "type": "image",
-      "src": "https://renemages.wordpress.com/wp-content/uploads/2019/07/python-logo.jpg",
+      "src": "https://miro.medium.com/v2/resize:fit:2000/0*zj_kGMq6f2ZxW7p3.png",
       "alt": ""
     },
     {
-      "type": "jump"
+      "type": "index",
+      "items": [
+        { "text": "Introduction", "anchor": "anchor0" },
+        { "text": "Pré-requis", "anchor": "anchor1" },
+        { "text": "Créer un projet React", "anchor": "anchor2" },
+        { "text": "Lancer le projet", "anchor": "anchor3" },
+        { "text": "Structure de projet recommandée", "anchor": "anchor4" },
+        { "text": "Renommer les fichiers", "anchor": "anchor5" },
+        { "text": "Installer web-vitals si problème", "anchor": "anchor6" },
+        { "text": "Ajouter React Router", "anchor": "anchor7" },
+        { "text": "Utiliser styled-components", "anchor": "anchor8" },
+        { "text": "Ajouter Redux", "anchor": "anchor9" },
+        { "text": "Déploiement GitHub Pages", "anchor": "anchor10" }
+
+        
+      ]
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "Heading"
+      "text": "Introduction",
+      "anchor": "anchor0"
     },
     {
       "type": "paragraph",
-      "text": "Lorem machin truc."
+      "text": "React est une bibliothèque JavaScript créée par Facebook pour créer des interfaces utilisateurs réactives et modulaires."
+    },
+    {
+      "type": "paragraph",
+      "text": "l'UI est découpée en composants réutilisables. Le state gère les données internes, les props transmettent des données entre composants et React met à jour uniquement ce qui change."
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pré-requis",
+      "anchor": "anchor1"
+    },
+    {
+      "type": "paragraph",
+      "text": "Node.js et npm/yarn installés :"
+    },
+    {
+      "type": "code",
+      "text": "node -v\nnpm -v\nyarn -v"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Créer un projet React",
+      "anchor": "anchor2"
+    },
+    {
+      "type": "paragraph",
+      "text": "Avec Create React App créer un projet dans un nouveau dossier :"
+    },
+    {
+      "type": "code",
+      "text": "npx create-react-app nom-du-projet\ncd nom-du-projet"
+    },
+    {
+      "type": "paragraph",
+      "text": "Si le dossier existe déjà :"
+    },
+    {
+      "type": "code",
+      "text": "npx create-react-app ."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Avec Vite (alternative plus rapide et moderne) :"
+    },
+    {
+      "type": "code",
+      "text": "npm create vite@latest nom-du-projet --template react\ncd nom-du-projet\nnpm install"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Lancer le projet",
+      "anchor": "anchor3"
+    },
+    {
+      "type": "code",
+      "text": "npm start"
+    },
+    {
+      "type": "paragraph",
+      "text": "ou"
+    },
+    {
+      "type": "code",
+      "text": "yarn start"
+    },
+    {
+      "type": "paragraph",
+      "text": "Le projet sera disponible sur http://localhost:3000"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Structure de projet recommandée",
+      "anchor": "anchor4"
+    },
+    {
+      "type": "code",
+      "text": "/src\n  /assets        # Images, icônes\n  /components    # Tous les composants réutilisables\n  /pages         # Pages principales\n  /styles        # Global styles si nécessaires\n  /redux         # Store et slices si Redux utilisé\nApp.jsx          # Entrée principale\nindex.jsx        # Point d'entrée"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Renommer les fichiers",
+      "anchor": "anchor5"
+    },
+    {
+      "type": "code",
+      "text": "Renommer index.js en index.jsx\nRenommer App.js en Home.jsx et le placer dans /pages\nCréer /components et /pages si non existants."
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Installer web-vitals si problème",
+      "anchor": "anchor6"
+    },
+    {
+      "type": "code",
+      "text": "npm install web-vitals --save-dev"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ajouter React Router",
+      "anchor": "anchor7"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pour le routing de pages dans l'application."
+    },
+    {
+      "type": "paragraph",
+      "text": "Installation :"
+    },
+    {
+      "type": "code",
+      "text": "yarn add react-router-dom"
+    },
+    {
+      "type": "paragraph",
+      "text": "ou"
+    },
+    {
+      "type": "code",
+      "text": "npm install react-router-dom"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Importer dans index.jsx :"
+    },
+    {
+      "type": "code",
+      "text": "import { BrowserRouter, Routes, Route } from \"react-router-dom\";"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pour GitHub Pages (ou routes hashées) :"
+    },
+    {
+      "type": "code",
+      "text": "import { HashRouter, Routes, Route } from \"react-router-dom\";"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exemple minimal :"
+    },
+    {
+      "type": "code",
+      "text": "import React from \"react\";\nimport ReactDOM from \"react-dom/client\";\nimport { BrowserRouter, Routes, Route } from \"react-router-dom\";\nimport Home from \"./pages/Home.jsx\";\n\nconst root = ReactDOM.createRoot(document.getElementById(\"root\"));\nroot.render(\n  <React.StrictMode>\n    <BrowserRouter>\n      <Routes>\n        <Route path=\"/\" element={<Home />} />\n      </Routes>\n    </BrowserRouter>\n  </React.StrictMode>\n);\n"
+    },
+    {
+      "type": "paragraph",
+      "text": "ou"
+    },
+    {
+      "type": "code",
+      "text": "import React from \"react\";\nimport ReactDOM from \"react-dom/client\";\nimport { HashRouter, Routes, Route } from \"react-router-dom\";\nimport Home from \"./pages/Home.jsx\";\n\nconst root = ReactDOM.createRoot(document.getElementById(\"root\"));\nroot.render(\n  <React.StrictMode>\n    <HashRouter>\n      <Routes>\n        <Route path=\"/\" element={<Home />} />\n      </Routes>\n    </HashRouter>\n  </React.StrictMode>\n);\n"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Créer des liens :"
+    },
+    {
+      "type": "code",
+      "text": "import { Link } from 'react-router-dom';\n\nconst Nav = () => (\n  <nav>\n    <Link to=\"/\">Accueil</Link>\n    <Link to=\"/about\">À propos</Link>\n  </nav>\n);\n"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Utiliser styled-components",
+      "anchor": "anchor8"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pour gérer le CSS dans JS de manière propre et modulaire."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Installation :"
+    },
+    {
+      "type": "code",
+      "text": "yarn add styled-components"
+    },
+    {
+      "type": "paragraph",
+      "text": "ou"
+    },
+    {
+      "type": "code",
+      "text": "npm install styled-components"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Utilisation :"
+    },
+    {
+      "type": "code",
+      "text": "import styled from 'styled-components';\n\nconst CardLabel = styled.span`\n  font-size: 16px;\n  color: blue;\n`;\n\nconst CardLink = styled(Link)`\n  text-decoration: none;\n  color: inherit;\n`;"
+    },
+
+
+     {
+      "type": "heading",
+      "level": 2,
+      "text": "Ajouter Redux",
+      "anchor": "anchor9"
+    },
+    {
+      "type": "paragraph",
+      "text": "Redux permet de gérer un state global."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Installation :"
+    },
+    {
+      "type": "code",
+      "text": "yarn add redux react-redux"
+    },
+    {
+      "type": "paragraph",
+      "text": "ou"
+    },
+    {
+      "type": "code",
+      "text": "npm install redux react-redux"
+    },
+    {
+      "type": "paragraph",
+      "text": "Structure recommandée :"
+    },
+    {
+      "type": "code",
+      "text": "/src\n  /redux\n    store.js\n    /slices\n      userSlice.js\n      productSlice.js"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exemple store.js :"
+    },
+    {
+      "type": "code",
+      "text": "import { configureStore } from '@reduxjs/toolkit';\nimport userReducer from './slices/userSlice';\n\nexport const store = configureStore({\n  reducer: {\n    user: userReducer,\n  },\n});"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exemple userSlice.js :"
+    },
+    {
+      "type": "code",
+      "text": "import { createSlice } from '@reduxjs/toolkit';\n\nconst userSlice = createSlice({\n  name: 'user',\n  initialState: { name: '', loggedIn: false },\n  reducers: {\n    login: (state, action) => {\n      state.name = action.payload;\n      state.loggedIn = true;\n    },\n    logout: (state) => {\n      state.name = '';\n      state.loggedIn = false;\n    },\n  },\n});\n\nexport const { login, logout } = userSlice.actions;\nexport default userSlice.reducer;\n"
+    },
+    {
+      "type": "paragraph",
+      "text": "Liaison dans index.jsx :"
+    },
+    {
+      "type": "code",
+      "text": "import { Provider } from 'react-redux';\nimport { store } from './redux/store';\n\nroot.render(\n  <React.StrictMode>\n    <Provider store={store}>\n      <BrowserRouter>\n        <Routes>\n          <Route path=\"/\" element={<Home />} />\n        </Routes>\n      </BrowserRouter>\n    </Provider>\n  </React.StrictMode>\n);"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Déploiement GitHub Pages",
+      "anchor": "anchor9"
+    },
+    {
+      "type": "paragraph",
+      "text": "Installer :"
+    },
+    {
+      "type": "code",
+      "text": "npm install gh-pages --save-dev"
+    },
+    {
+      "type": "paragraph",
+      "text": "Configurer package.json avec ce format https://{username}.github.io/{repo-name} :"
+    },
+    {
+      "type": "code",
+      "text": "  \"name\": \"my-app\",\n  \"version\": \"0.1.0\",\n+ \"homepage\": \"https://gitname.github.io/repo-name\",\n  \"private\": true,"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ajouter dans scripts :"
+    },
+    {
+      "type": "code",
+      "text": "\"scripts\": {\n+   \"predeploy\": \"npm run build\",\n+   \"deploy\": \"gh-pages -d build\",\n    \"start\": \"react-scripts start\",\n    \"build\": \"react-scripts build\","
+    },
+    {
+      "type": "paragraph",
+      "text": "Puis :"
+    },
+    {
+      "type": "code",
+      "text": "npm run deploy"
     }
   ]
 }
