@@ -3,20 +3,180 @@
   "content": [
     {
       "type": "image",
-      "src": "https://renemages.wordpress.com/wp-content/uploads/2019/07/python-logo.jpg",
+      "src": "https://www.all4test.fr/wp-content/uploads/2024/05/Test-unitaire.png",
       "alt": ""
     },
     {
-      "type": "jump"
+      "type": "index",
+      "items": [
+        { "text": "Introduction", "anchor": "anchor0" },
+        { "text": "Les bibliothèques de test en Python", "anchor": "anchor1" },
+        { "text": "Structure de base d’un test avec unittest", "anchor": "anchor2" },
+        { "text": "Méthodes d'assertion principales", "anchor": "anchor3" },
+        { "text": "Organisation des tests dans un projet", "anchor": "anchor4" },
+        { "text": "Exécution des tests", "anchor": "anchor5" },
+        { "text": "Utiliser les méthodes setUp et tearDown", "anchor": "anchor6" },
+        { "text": "Tester les exceptions", "anchor": "anchor7" }
+
+        
+        
+      ]
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "Heading"
+      "text": "Introduction",
+      "anchor": "anchor0"
     },
     {
       "type": "paragraph",
-      "text": "Lorem machin truc."
+      "text": "Un test unitaire vérifie qu’une unité de code (fonction, méthode, classe) fonctionne comme prévu. Il permet de détecter rapidement les erreurs lors des modifications, de faciliter le refactoring sans peur de casser le code et de documenter le comportement attendu du code."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Les bibliothèques de test en Python",
+      "anchor": "anchor1"
+    },
+    {
+      "type": "paragraph",
+      "text": "unittest (intégré à Python, inspiré de JUnit)"
+    },
+    {
+      "type": "paragraph",
+      "text": "pytest (plus flexible, plus moderne, recommandé dans les projets)"
+    },
+    {
+      "type": "paragraph",
+      "text": "doctest (permet d’écrire des tests dans les docstrings)"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Structure de base d’un test avec unittest",
+      "anchor": "anchor2"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exemple de fonction à tester :"
+    },
+    {
+      "type": "code",
+      "text": "# calculator.py\ndef add(a, b):\n    return a + b\n"
+    },
+    {
+      "type": "paragraph",
+      "text": "Écriture d’un test :"
+    },
+    {
+      "type": "code",
+      "text": "# test_calculator.py\nimport unittest\nfrom calculator import add\n\nclass TestCalculator(unittest.TestCase):\n\n    def test_add(self):\n        self.assertEqual(add(2, 3), 5)\n        self.assertEqual(add(-1, 1), 0)\n        self.assertEqual(add(0, 0), 0)\n\nif __name__ == '__main__':\n    unittest.main()"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Méthodes d'assertion principales",
+      "anchor": "anchor3"
+    },
+    {
+      "type": "paragraph",
+      "text": "Dans une classe héritant de unittest.TestCase, nous avons accès à :"
+    },
+    {
+      "type": "code",
+      "text": "assertEqual(a, b) -> Vérifie que a == b\nassertNotEqual(a, b) -> Vérifie que a != b\nassertTrue(x) -> Vérifie que bool(x) is True\nassertFalse(x) -> Vérifie que bool(x) is False\nassertIs(a, b) -> Vérifie que a is b\nassertIsNot(a, b) -> Vérifie que a is not b\nassertIsNone(x) -> Vérifie que x is None\nassertIsNotNone(x) -> Vérifie que x is not None\nassertIn(a, b) -> Vérifie que a in b\nassertNotIn(a, b) -> Vérifie que a not in b\nassertRaises(Exception, func) -> Vérifie qu’une exception est levée"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Organisation des tests dans un projet",
+      "anchor": "anchor4"
+    },
+    {
+      "type": "paragraph",
+      "text": "Crée un dossier tests/ à la racine du projet."
+    },
+    {
+      "type": "paragraph",
+      "text": "Crée des fichiers test_*.py par module."
+    },
+    {
+      "type": "paragraph",
+      "text": "Utiliser le même nom de fonction ou classe que le module testé pour se repérer."
+    },
+    {
+      "type": "code",
+      "text": "project/\n│\n├── calculator.py\n├── utils.py\n└── tests/\n    ├── test_calculator.py\n    └── test_utils.py"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Exécution des tests",
+      "anchor": "anchor5"
+    },
+    {
+      "type": "paragraph",
+      "text": "Depuis le terminal :"
+    },
+    {
+      "type": "code",
+      "text": "python -m unittest discover"
+    },
+    {
+      "type": "paragraph",
+      "text": "ou"
+    },
+    {
+      "type": "code",
+      "text": "python -m unittest tests/test_calculator.py"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pour voir plus de détails :"
+    },
+    {
+      "type": "code",
+      "text": "python -m unittest discover -v"
+    },
+    {
+      "type": "paragraph",
+      "text": "Dans VS Code \"Run Tests\" est intégrés."
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Utiliser les méthodes setUp et tearDown",
+      "anchor": "anchor6"
+    },
+    {
+      "type": "paragraph",
+      "text": "Permet d’exécuter du code avant ou après chaque test (initialisation, nettoyage)."
+    },
+    {
+      "type": "code",
+      "text": "import unittest\n\nclass TestExample(unittest.TestCase):\n\n    def setUp(self):\n        # exécuté avant chaque test\n        self.data = [1, 2, 3]\n\n    def tearDown(self):\n        # exécuté après chaque test\n        pass\n\n    def test_length(self):\n        self.assertEqual(len(self.data), 3)"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Tester les exceptions",
+      "anchor": "anchor7"
+    },
+    {
+      "type": "code",
+      "text": "def divide(a, b):\n    return a / b\n\nimport unittest\n\nclass TestDivide(unittest.TestCase):\n    def test_divide_by_zero(self):\n        with self.assertRaises(ZeroDivisionError):\n            divide(10, 0)"
     }
   ]
 }
