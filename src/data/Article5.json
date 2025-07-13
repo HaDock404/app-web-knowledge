@@ -3,20 +3,375 @@
   "content": [
     {
       "type": "image",
-      "src": "https://renemages.wordpress.com/wp-content/uploads/2019/07/python-logo.jpg",
+      "src": "https://www.skyminds.net/wp-content/uploads/2019/06/ssh-logo-768x478.png",
       "alt": ""
     },
     {
-      "type": "jump"
+      "type": "index",
+      "items": [
+        { "text": "Secure Shell", "anchor": "anchor0" },
+        { "text": "Installation et activation du serveur SSH", "anchor": "anchor1" },
+        { "text": "Connexion à l’ordinateur distant", "anchor": "anchor2" },
+        { "text": "Transfert de fichiers avec SCP", "anchor": "anchor3" },
+        { "text": "Configuration de clés SSH pour éviter le mot de passe", "anchor": "anchor4" },
+        { "text": "Commandes utiles pour gérer les fichiers téléchargés", "anchor": "anchor5" },
+        { "text": "Utilisation de screen pour détacher des processus", "anchor": "anchor6" },
+        { "text": "Connaitre les caractéristiques de la machine distante", "anchor": "anchor7" }
+  
+        
+      ]
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "Heading"
+      "text": "Secure Shell",
+      "anchor": "anchor0"
     },
     {
       "type": "paragraph",
-      "text": "Lorem machin truc."
+      "text": "SSH est un protocole sécurisé permettant d’administrer et de se connecter à une machine distante via le réseau en utilisant un canal chiffré. Il permet un accès à distance en ligne de commande tout en permettant le trasnfert sécurisé de fichier. Également le contrôle en ligne de commande d'un autre appareil et le tunneling de ports."
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Installation et activation du serveur SSH",
+      "anchor": "anchor1"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Sur l’ordinateur distant (serveur) il faut vérifier si SSH est installé et actif :"
+    },
+    {
+      "type": "code",
+      "text": "systemctl status ssh"
+    },
+    {
+      "type": "paragraph",
+      "text": "ou sur certaines distributions :"
+    },
+    {
+      "type": "code",
+      "text": "systemctl status sshd"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Si SSH est désactivé :"
+    },
+    {
+      "type": "paragraph",
+      "text": "Activer le service au démarrage :"
+    },
+    {
+      "type": "code",
+      "text": "sudo systemctl enable ssh"
+    },
+    {
+      "type": "paragraph",
+      "text": "Démarrer le service :"
+    },
+    {
+      "type": "code",
+      "text": "sudo systemctl start ssh"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Installer SSH si absent :"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sur Debian/Ubuntu :"
+    },
+    {
+      "type": "code",
+      "text": "sudo apt update\nsudo apt install openssh-server"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sur Arch :"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S openssh"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sur Fedora :"
+    },
+    {
+      "type": "code",
+      "text": "sudo dnf install openssh-server"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Connexion à l’ordinateur distant",
+      "anchor": "anchor2"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Connaitre l'adresse IP"
+    },
+    {
+      "type": "paragraph",
+      "text": "IP locale :"
+    },
+    {
+      "type": "code",
+      "text": "ifconfig"
+    },
+    {
+      "type": "paragraph",
+      "text": "ou"
+    },
+    {
+      "type": "code",
+      "text": "ip a"
+    },
+    {
+      "type": "paragraph",
+      "text": "Résultat :"
+    },
+    {
+      "type": "code",
+      "text": "inet 192.168.x.x"
+    },
+    {
+      "type": "paragraph",
+      "text": "IP publique :"
+    },
+    {
+      "type": "code",
+      "text": "curl ifconfig.me"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Connexion SSH"
+    },
+    {
+      "type": "paragraph",
+      "text": "IP locale :"
+    },
+    {
+      "type": "paragraph",
+      "text": "ou si un port spécifique est configuré (ex : 2223) :"
+    },
+    {
+      "type": "code",
+      "text": "ssh -p 2223 username@84.121.194.87"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Transfert de fichiers avec SCP",
+      "anchor": "anchor3"
+    },
+    {
+      "type": "paragraph",
+      "text": "SCP (Secure Copy) utilise SSH pour transférer des fichiers de manière sécurisée."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Télécharger un fichier depuis le serveur :"
+    },
+    {
+      "type": "code",
+      "text": "scp username@192.168.x.x:/home/username/Téléchargements/file.pdf ."
+    },
+    {
+      "type": "paragraph",
+      "text": "(. indique le dossier local actuel comme destination"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Uploader un fichier vers le serveur :"
+    },
+    {
+      "type": "code",
+      "text": "scp file.pdf username@192.168.x.x:/home/username/Téléchargements"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Transférer un dossier complet :"
+    },
+    {
+      "type": "code",
+      "text": "scp -r dossier username@192.168.x.x:/home/username/Téléchargements"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Configuration de clés SSH pour éviter le mot de passe",
+      "anchor": "anchor4"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pour simplifier et sécuriser la connexion :"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Générer une clé SSH sur la machine cliente :"
+    },
+    {
+      "type": "code",
+      "text": "ssh-keygen -t rsa -b 4096 -C \"email@example.com\""
+    },
+    {
+      "type": "paragraph",
+      "text": "Valider par Entrée pour le chemin proposé (ou indiquer un chemin spécifique) puis entrer un mot de passe si souhaité."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Envoyer la clé publique sur le serveur :"
+    },
+    {
+      "type": "code",
+      "text": "ssh-copy-id username@192.168.x.x"
+    },
+    {
+      "type": "paragraph",
+      "text": "Si ssh-copy-id n’est pas disponible, copier manuellement :"
+    },
+    {
+      "type": "code",
+      "text": "cat ~/.ssh/id_rsa.pub | ssh username@192.168.x.x \"mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys\""
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Commandes utiles pour gérer les fichiers téléchargés",
+      "anchor": "anchor5"
+    },
+    {
+      "type": "paragraph",
+      "text": "Télécharger depuis un site web :"
+    },
+    {
+      "type": "code",
+      "text": "curl -o file.zip https://site.com/file.zip"
+    },
+    {
+      "type": "paragraph",
+      "text": "Dézipper un dossier :"
+    },
+    {
+      "type": "code",
+      "text": "unzip file.zip"
+    },
+    {
+      "type": "paragraph",
+      "text": "ou avec extraction dans un dossier spécifique :"
+    },
+    {
+      "type": "code",
+      "text": "unzip file.zip -d dossier_destination"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Utilisation de screen pour détacher des processus",
+      "anchor": "anchor6"
+    },
+    {
+      "type": "paragraph",
+      "text": "screen permet d’exécuter des processus persistants même après déconnexion SSH."
+    },
+    {
+      "type": "paragraph",
+      "text": "Créer une session :"
+    },
+    {
+      "type": "code",
+      "text": "screen -S nom_de_la_session"
+    },
+    {
+      "type": "paragraph",
+      "text": "Détacher la session :"
+    },
+    {
+      "type": "code",
+      "text": "Ctrl + a puis d"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lister les sessions :"
+    },
+    {
+      "type": "code",
+      "text": "screen -ls"
+    },
+    {
+      "type": "paragraph",
+      "text": "Rejoindre une session :"
+    },
+    {
+      "type": "code",
+      "text": "screen -r nom_de_la_session"
+    },
+    {
+      "type": "paragraph",
+      "text": "Quitter proprement une session :"
+    },
+    {
+      "type": "code",
+      "text": "exit"
+    },
+    {
+      "type": "paragraph",
+      "text": "Forcer la fermeture d'une session :"
+    },
+    {
+      "type": "code",
+      "text": "screen -X -S nom_de_la_session quit"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Connaitre les caractéristiques de la machine distante",
+      "anchor": "anchor7"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pour l'affichage :"
+    },
+    {
+      "type": "paragraph",
+      "text": "macOS :"
+    },
+    {
+      "type": "code",
+      "text": "system_profiler SPDisplaysDataType"
+    },
+    {
+      "type": "paragraph",
+      "text": "Linux :"
+    },
+    {
+      "type": "code",
+      "text": "lscpu       # infos CPU\nlsblk       # infos disques\nfree -h     # infos RAM\nlshw        # infos détaillées (parfois à installer)"
     }
   ]
 }

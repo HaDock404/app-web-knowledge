@@ -33,8 +33,8 @@
   },
   {
     "id": "a0004",
-    "article_name": "Consulting",
-    "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTwJQgnkGPWVR8wLdpwWaSGlGbGgcX9-yVww&s",
+    "article_name": "SSH",
+    "article_img":"https://www.skyminds.net/wp-content/uploads/2019/06/ssh-logo-768x478.png",
     "tags": ["consulting"],
     "data_article":"../data/Article5.json",
     "url_path":"/article/articlepage5"
