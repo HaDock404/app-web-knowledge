@@ -9,7 +9,15 @@
     {
       "type": "index",
       "items": [
-        { "text": "Introduction", "anchor": "anchor0" },
+        { "text": "Créer une table", "anchor": "anchor14" },
+        { "text": "Créer une table", "anchor": "anchor15" },
+        { "text": "Activer des extensions", "anchor": "anchor16" },
+        { "text": "Créer une fonction personnalisée IMMUTABLE", "anchor": "anchor17" },
+        { "text": "Créer un index pour optimiser les recherches", "anchor": "anchor18" },
+        { "text": "Modifier une table", "anchor": "anchor19" },
+        { "text": "Triggers pour automatiser les mises à jour", "anchor": "anchor20" },
+        { "text": "Vérifier la structure", "anchor": "anchor21" },
+        { "text": "psql dans Docker sur GCP", "anchor": "anchor0" },
         { "text": "Création de l’image PostgreSQL avec extensions", "anchor": "anchor1" },
         { "text": "Lancer PostgreSQL en local pour tester", "anchor": "anchor2" },
         { "text": "Accéder à psql dans le conteneur", "anchor": "anchor3" },
@@ -19,12 +27,13 @@
         { "text": "Connexion SSH à la VM", "anchor": "anchor7" },
         { "text": "Connexion psql dans le conteneur sur la VM", "anchor": "anchor8" },
         { "text": "Vérifier les rôles et en créer", "anchor": "anchor9" },
-        { "text": "Activer les extensions nécessaires", "anchor": "anchor10" },
-        { "text": "Index de recherche (FTS & TRGM)", "anchor": "anchor11" },
         { "text": "Transfert de données", "anchor": "anchor12" },
-        { "text": "Connexion à distance", "anchor": "anchor13" }
+        { "text": "Connexion à distance", "anchor": "anchor13" },
+        { "text": "Analyser et optimiser", "anchor": "anchor22" },
+        { "text": "Sauvegarde et restauration", "anchor": "anchor23" }
 
         
+
         
       ]
     },
@@ -33,7 +42,235 @@
     {
       "type": "heading",
       "level": 2,
-      "text": "Introduction",
+      "text": "Créer une table",
+      "anchor": "anchor14"
+    },
+    {
+      "type": "paragraph",
+      "text": "Syntaxe générale :"
+    },
+    {
+      "type": "code",
+      "text": "CREATE TABLE companies (\n    id SERIAL PRIMARY KEY, # SERIAL : incrément automatique PRIMARY KEY : clé primaire\n    name TEXT NOT NULL,\n    values VARCHAR(14),\n    date_start DATE,\n    created_at TIMESTAMP DEFAULT NOW(), # DEFAULT : valeur par défaut\n    deleted BOOLEAN DEFAULT FALSE,\n);"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Créer une table de jointure",
+      "anchor": "anchor15"
+    },
+    {
+      "type": "paragraph",
+      "text": "Permet de gérer une relation many-to-many entre deux tables (ex. services liés entre eux)."
+    },
+    {
+      "type": "code",
+      "text": "CREATE TABLE linked_services (\n    service_id INT REFERENCES services(id) ON DELETE CASCADE, # REFERENCES crée une clé étrangère ON DELETE CASCADE : supprime la ligne si la ligne référencée est supprimée\n    linked_service_id INT REFERENCES services(id) ON DELETE CASCADE,\n    PRIMARY KEY (service_id, linked_service_id) # PRIMARY KEY composé de deux colonnes → empêche doublons\n);"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Activer des extensions",
+      "anchor": "anchor16"
+    },
+    {
+      "type": "paragraph",
+      "text": "Étendre PostgreSQL pour ajouter des fonctionnalités (ex. recherche floue, plein texte)."
+    },
+    {
+      "type": "code",
+      "text": "CREATE EXTENSION IF NOT EXISTS pg_trgm; # pg_trgm : recherche floue / similarité\nCREATE EXTENSION IF NOT EXISTS unaccent; # unaccent : ignorer les accents pour le texte"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Créer une fonction personnalisée IMMUTABLE",
+      "anchor": "anchor17"
+    },
+    {
+      "type": "paragraph",
+      "text": "Certaines fonctions comme unaccent ne sont pas IMMUTABLE → PostgreSQL exige IMMUTABLE pour les indexes GIN ou FTS."
+    },
+    {
+      "type": "code",
+      "text": "CREATE FUNCTION immutable_unaccent(text)\nRETURNS text AS $$\n  SELECT unaccent($1)\n$$ LANGUAGE SQL IMMUTABLE;\n"
+    },
+    {
+      "type": "paragraph",
+      "text": "IMMUTABLE = résultat identique pour les mêmes entrées → OK pour index"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Créer un index pour optimiser les recherches",
+      "anchor": "anchor18"
+    },
+    {
+      "type": "paragraph",
+      "text": "Index plein texte :"
+    },
+    {
+      "type": "code",
+      "text": "CREATE INDEX idx_services_fts_contextual_desc\nON services\nUSING GIN (to_tsvector('french', immutable_unaccent(contextual_description)));"
+    },
+    {
+      "type": "paragraph",
+      "text": "Index fuzzy (pg_trgm) :"
+    },
+    {
+      "type": "code",
+      "text": "CREATE INDEX idx_services_trgm_name\nON services USING GIN (name_service gin_trgm_ops);"
+    },
+    {
+      "type": "paragraph",
+      "text": "Index = boost performance pour LIKE, ILIKE, SIMILARITY, to_tsvector."
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Modifier une table :",
+      "anchor": "anchor19"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ajouter une colonne :"
+    },
+    {
+      "type": "code",
+      "text": "ALTER TABLE companies ADD COLUMN website TEXT;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Modifier une colonne (type) :"
+    },
+    {
+      "type": "code",
+      "text": "ALTER TABLE service\nALTER COLUMN service_type TYPE VARCHAR(255)\nUSING service_type::text;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Définir une valeur par défaut :"
+    },
+    {
+      "type": "code",
+      "text": "ALTER TABLE company\nALTER COLUMN created_at SET DEFAULT now(),\nALTER COLUMN updated_at SET DEFAULT now(),\nALTER COLUMN deleted SET DEFAULT false;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Rendre un champ nullable :"
+    },
+    {
+      "type": "code",
+      "text": "ALTER TABLE service\nALTER COLUMN billing DROP NOT NULL;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Supprimer une colonne :"
+    },
+    {
+      "type": "code",
+      "text": "ALTER TABLE it_service_company DROP COLUMN slug;"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Triggers pour automatiser les mises à jour",
+      "anchor": "anchor20"
+    },
+    {
+      "type": "paragraph",
+      "text": "Créer une fonction déclenchée :"
+    },
+    {
+      "type": "code",
+      "text": "CREATE OR REPLACE FUNCTION set_updated_by()\nRETURNS TRIGGER AS $$\nBEGIN\n    NEW.updated_by = current_user;\n    NEW.updated_at = now();\n    RETURN NEW;\nEND;\n$$ LANGUAGE plpgsql;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Créer un trigger associé :"
+    },
+    {
+      "type": "code",
+      "text": "CREATE TRIGGER trg_set_updated_by\nBEFORE INSERT OR UPDATE ON company\nFOR EACH ROW\nEXECUTE FUNCTION set_updated_by();"
+    },
+    {
+      "type": "paragraph",
+      "text": "Les triggers permettent de tenir à jour automatiquement des colonnes (updated_at, updated_by)."
+    },
+    {
+      "type": "paragraph",
+      "text": "Supprimer un trigger"
+    },
+    {
+      "type": "code",
+      "text": "DROP TRIGGER trg_set_created_by ON place;"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Vérifier la structure",
+      "anchor": "anchor21"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lister les tables :"
+    },
+    {
+      "type": "code",
+      "text": "\\dt"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lister les colonnes :"
+    },
+    {
+      "type": "code",
+      "text": "\\d companies"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lister les extensions installées :"
+    },
+    {
+      "type": "code",
+      "text": "\\dx"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lister les index :"
+    },
+    {
+      "type": "code",
+      "text": "\\di"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lister les fonctions :"
+    },
+    {
+      "type": "code",
+      "text": "\\df"
+    },
+    
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "psql dans Docker sur GCP",
       "anchor": "anchor0"
     },
     {
@@ -47,6 +284,14 @@
       "level": 2,
       "text": "Création de l’image PostgreSQL avec extensions",
       "anchor": "anchor1"
+    },
+    {
+      "type": "paragraph",
+      "text": "init.sql :"
+    },
+    {
+      "type": "code",
+      "text": "-- Active les extensions\n-- Création table\n-- Création table jointure\n-- Création des index\n-- Création de fonction\n-- Index\n-- Ajouter des triggers"
     },
     {
       "type": "paragraph",
@@ -192,29 +437,13 @@
       "type": "code",
       "text": "CREATE ROLE data_team;\n# On donne des autorisations à l'équipe\nGRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO data_team;\n\nALTER DEFAULT PRIVILEGES IN SCHEMA public\nGRANT SELECT, INSERT, UPDATE ON TABLES TO data_team;\n# On ajoute les utilisateurs à la team\nGRANT data_team TO data_team_00;"
     },
-
-
     {
-      "type": "heading",
-      "level": 2,
-      "text": "Activer les extensions nécessaires",
-      "anchor": "anchor10"
+      "type": "paragraph",
+      "text": "Supprimer un rôle :"
     },
     {
       "type": "code",
-      "text": "CREATE EXTENSION IF NOT EXISTS pg_trgm;\nCREATE EXTENSION IF NOT EXISTS unaccent;"
-    },
-
-
-    {
-      "type": "heading",
-      "level": 2,
-      "text": "Index de recherche (FTS & TRGM)",
-      "anchor": "anchor11"
-    },
-    {
-      "type": "code",
-      "text": "CREATE FUNCTION immutable_unaccent(text)\nRETURNS text AS $$\n  SELECT unaccent($1)\n$$ LANGUAGE SQL IMMUTABLE;\n\nCREATE INDEX idx_services_fts_contextual_desc\n    ON services USING GIN (to_tsvector('french', immutable_unaccent(contextual_description)));\n\nCREATE INDEX idx_services_trgm_name ON services USING GIN (name_service gin_trgm_ops);"
+      "text": "DROP ROLE new_user;"
     },
 
 
@@ -248,6 +477,14 @@
       "type": "code",
       "text": "INSERT INTO table_name (column_name)\nSELECT DISTINCT column_name\nFROM staging_raw_data\nWHERE column_name IS NOT NULL\nON CONFLICT (table_name) DO NOTHING;"
     },
+    {
+      "type": "paragraph",
+      "text": "Exporter des données :"
+    },
+    {
+      "type": "code",
+      "text": "\\copy (SELECT * FROM companies) TO '/chemin/export.csv' DELIMITER ',' CSV HEADER;"
+    },
 
 
     {
@@ -271,6 +508,86 @@
     {
       "type": "code",
       "text": "psql -h <IP_VM> -U superuser -d werner-chatbot"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Analyser et optimiser",
+      "anchor": "anchor22"
+    },
+    {
+      "type": "paragraph",
+      "text": "Voir la taille de la base :"
+    },
+    {
+      "type": "code",
+      "text": "SELECT pg_size_pretty(pg_database_size('dbname'));"
+    },
+    {
+      "type": "paragraph",
+      "text": "Voir la taille d'une table :"
+    },
+    {
+      "type": "code",
+      "text": "SELECT pg_size_pretty(pg_total_relation_size('table'));"
+    },
+    {
+      "type": "paragraph",
+      "text": "Analyser un plan d’exécution :"
+    },
+    {
+      "type": "code",
+      "text": "EXPLAIN ANALYZE SELECT * FROM table WHERE ...;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Vacuum pour nettoyer :"
+    },
+    {
+      "type": "code",
+      "text": "VACUUM;\nVACUUM FULL;  -- plus agressif, verrouille\nANALYZE;      -- actualise stats pour optimiser planificateur"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sauvegarde et restauration",
+      "anchor": "anchor23"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sauvegarder :"
+    },
+    {
+      "type": "code",
+      "text": "pg_dump -U user dbname > backup.sql"
+    },
+    {
+      "type": "paragraph",
+      "text": "Restaurer :"
+    },
+    {
+      "type": "code",
+      "text": "psql -U user -d dbname -f backup.sql"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sauvegarde compressée :"
+    },
+    {
+      "type": "code",
+      "text": "pg_dump -U user dbname | gzip > backup.sql.gz"
+    },
+    {
+      "type": "paragraph",
+      "text": "Restaurer compressée :"
+    },
+    {
+      "type": "code",
+      "text": "gunzip -c backup.sql.gz | psql -U user -d dbname"
     }
   ]
 }
