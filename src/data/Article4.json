@@ -1,22 +1,276 @@
 {
-  "title": "SQL",
+  "title": "psql",
   "content": [
     {
       "type": "image",
-      "src": "https://renemages.wordpress.com/wp-content/uploads/2019/07/python-logo.jpg",
+      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsHhT0lhtqSDNWxRp-jWjGiqMvYce069W8uA&s",
       "alt": ""
     },
     {
-      "type": "jump"
+      "type": "index",
+      "items": [
+        { "text": "Introduction", "anchor": "anchor0" },
+        { "text": "Création de l’image PostgreSQL avec extensions", "anchor": "anchor1" },
+        { "text": "Lancer PostgreSQL en local pour tester", "anchor": "anchor2" },
+        { "text": "Accéder à psql dans le conteneur", "anchor": "anchor3" },
+        { "text": "Préparer l’image pour GCP", "anchor": "anchor4" },
+        { "text": "Créer l'instance GCP", "anchor": "anchor5" },
+        { "text": "Configurer le firewall pour l'accès distant", "anchor": "anchor6" },
+        { "text": "Connexion SSH à la VM", "anchor": "anchor7" },
+        { "text": "Connexion psql dans le conteneur sur la VM", "anchor": "anchor8" },
+        { "text": "Vérifier les rôles et en créer", "anchor": "anchor9" },
+        { "text": "Activer les extensions nécessaires", "anchor": "anchor10" },
+        { "text": "Index de recherche (FTS & TRGM)", "anchor": "anchor11" },
+        { "text": "Transfert de données", "anchor": "anchor12" },
+        { "text": "Connexion à distance", "anchor": "anchor13" }
+
+        
+        
+      ]
     },
+
+
     {
       "type": "heading",
       "level": 2,
-      "text": "Heading"
+      "text": "Introduction",
+      "anchor": "anchor0"
     },
     {
       "type": "paragraph",
-      "text": "Lorem machin truc."
+      "text": "Utiliser psql dans Docker sur GCP permet de limiter les coûts. Pas besoin de Cloud SQL (payant), utilisation d’une VM e2-micro ou e2-small suffisant pour dev/test. Il es possible de de stopper la VM lorsqu'elle est inutilisé. Docker simplifie la gestion des dépendances PostgreSQL et la persistance des données via le volume ou le disque attaché. La base de données est facilement réplicable sur d'autres environnements (prod, staging)."
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Création de l’image PostgreSQL avec extensions",
+      "anchor": "anchor1"
+    },
+    {
+      "type": "paragraph",
+      "text": "Dockerfile :"
+    },
+    {
+      "type": "code",
+      "text": "FROM postgres:16\n\nRUN apt-get update && apt-get install -y postgresql-contrib\n\n# Copie éventuelle de scripts init SQL\nCOPY init.sql /docker-entrypoint-initdb.d/"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lancer le build :"
+    },
+    {
+      "type": "code",
+      "text": "docker build -t werner-chatbot-db ."
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Lancer PostgreSQL en local pour tester",
+      "anchor": "anchor2"
+    },
+    {
+      "type": "code",
+      "text": "docker run --name werner-chatbot_container \n  -e POSTGRES_PASSWORD=mypassword \n  -e POSTGRES_USER=superuser \n  -e POSTGRES_DB=werner-chatbot \n  -p 5432:5432 \n  -v $(pwd)/data:/var/lib/postgresql/data \n  -d werner-chatbot-db"
+    },
+    {
+      "type": "paragraph",
+      "text": "Le volume -v assure persistance des données même après suppression du conteneur."
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Accéder à psql dans le conteneur",
+      "anchor": "anchor3"
+    },
+    {
+      "type": "code",
+      "text": "docker exec -ti werner-chatbot_container bash\npsql -U superuser -d werner-chatbot"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Préparer l’image pour GCP",
+      "anchor": "anchor4"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pousser sur DockerHub :"
+    },
+    {
+      "type": "code",
+      "text": "docker login\ndocker tag werner-chatbot-db hadock404/werner-chatbot:latest\ndocker push hadock404/werner-chatbot:latest"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Créer l'instance GCP",
+      "anchor": "anchor5"
+    },
+    {
+      "type": "code",
+      "text": "gcloud compute instances create werner-chatbot-db \n  --machine-type=e2-small \n  --image-project=debian-cloud \n  --image-family=debian-12 \n  --boot-disk-size=20GB \n  --zone=europe-west9-b \n  --tags=postgres \n  --metadata=startup-script='#!/bin/bash \n    apt update -y\n    apt install -y docker.io\n    systemctl start docker\n    systemctl enable docker\n    mkdir -p /opt/werner-chatbot/data\n    chmod 777 /opt/werner-chatbot/data\n    docker run -d \n      --name werner-chatbot \n      --restart unless-stopped \n      -e POSTGRES_PASSWORD=mypassword \n      -e POSTGRES_USER=superuser \n      -e POSTGRES_DB=werner-chatbot \n      -p 5432:5432 \n      -v /opt/werner-chatbot/data:/var/lib/postgresql/data \n      hadock404/werner-chatbot:latest'"
+    },
+    {
+      "type": "paragraph",
+      "text": "À la fin du script, PostgreSQL sera prêt automatiquement sur la VM."
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Configurer le firewall pour l'accès distant",
+      "anchor": "anchor6"
+    },
+    {
+      "type": "code",
+      "text": "gcloud compute firewall-rules create allow-postgres \n  --allow tcp:5432 \n  --target-tags=postgres \n  --description=\"Allow PostgreSQL access\" \n  --direction=INGRESS \n  --source-ranges=0.0.0.0/0"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pour restreindre l'accès, il faudra ensuite modifier source-ranges avec l'IP fixe."
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Connexion SSH à la VM",
+      "anchor": "anchor7"
+    },
+    {
+      "type": "code",
+      "text": "gcloud compute ssh werner-chatbot-db --zone=europe-west9-b"
+    },
+    {
+      "type": "paragraph",
+      "text": "Vérifier les logs d'installation : "
+    },
+    {
+      "type": "code",
+      "text": "cat /var/log/syslog | grep startup-script"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Connexion psql dans le conteneur sur la VM",
+      "anchor": "anchor8"
+    },
+    {
+      "type": "code",
+      "text": "sudo su -\ndocker exec -ti werner-chatbot bash\npsql -U superuser -d werner-chatbot --host localhost\n\\c werner-chatbot"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Vérifier les rôles et en créer",
+      "anchor": "anchor9"
+    },
+    {
+      "type": "code",
+      "text": "\\du\nCREATE ROLE data_team_00 LOGIN PASSWORD 'motdepasse';\nGRANT INSERT, UPDATE, SELECT ON ALL TABLES IN SCHEMA public TO data_team_00;\nALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT INSERT, UPDATE, SELECT ON TABLES TO data_team_00;\n"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sinon nous pouvons gérer les autorisations au niveau du groupe"
+    },
+    {
+      "type": "code",
+      "text": "CREATE ROLE data_team;\n# On donne des autorisations à l'équipe\nGRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO data_team;\n\nALTER DEFAULT PRIVILEGES IN SCHEMA public\nGRANT SELECT, INSERT, UPDATE ON TABLES TO data_team;\n# On ajoute les utilisateurs à la team\nGRANT data_team TO data_team_00;"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Activer les extensions nécessaires",
+      "anchor": "anchor10"
+    },
+    {
+      "type": "code",
+      "text": "CREATE EXTENSION IF NOT EXISTS pg_trgm;\nCREATE EXTENSION IF NOT EXISTS unaccent;"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Index de recherche (FTS & TRGM)",
+      "anchor": "anchor11"
+    },
+    {
+      "type": "code",
+      "text": "CREATE FUNCTION immutable_unaccent(text)\nRETURNS text AS $$\n  SELECT unaccent($1)\n$$ LANGUAGE SQL IMMUTABLE;\n\nCREATE INDEX idx_services_fts_contextual_desc\n    ON services USING GIN (to_tsvector('french', immutable_unaccent(contextual_description)));\n\nCREATE INDEX idx_services_trgm_name ON services USING GIN (name_service gin_trgm_ops);"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Transfert de données dans des tables de staging",
+      "anchor": "anchor12"
+    },
+    {
+      "type": "paragraph",
+      "text": "Transfert :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud compute scp data_service.csv utilisateur@werner-chatbot-db:/opt/werner-chatbot/data/"
+    },
+    {
+      "type": "paragraph",
+      "text": "Import via psql :"
+    },
+    {
+      "type": "code",
+      "text": "\\copy staging_raw_data FROM '/opt/werner-chatbot/data/data_service.csv' DELIMITER ',' CSV HEADER;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Insertion des données :"
+    },
+    {
+      "type": "code",
+      "text": "INSERT INTO table_name (column_name)\nSELECT DISTINCT column_name\nFROM staging_raw_data\nWHERE column_name IS NOT NULL\nON CONFLICT (table_name) DO NOTHING;"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Connexion à distance",
+      "anchor": "anchor13"
+    },
+    {
+      "type": "paragraph",
+      "text": "Récupérer l'IP publique :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud compute instances describe werner-chatbot-db \\\n  --zone=europe-west9-b \\\n  --format='get(networkInterfaces[0].accessConfigs[0].natIP)'"
+    },
+    {
+      "type": "paragraph",
+      "text": "Puis :"
+    },
+    {
+      "type": "code",
+      "text": "psql -h <IP_VM> -U superuser -d werner-chatbot"
     }
   ]
 }

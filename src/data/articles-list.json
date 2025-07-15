@@ -25,7 +25,7 @@
   },
   {
     "id": "a0003",
-    "article_name": "SQL",
+    "article_name": "psql",
     "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsHhT0lhtqSDNWxRp-jWjGiqMvYce069W8uA&s",
     "tags": ["SQL"],
     "data_article":"../data/Article4.json",
