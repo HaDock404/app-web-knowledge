@@ -81,9 +81,9 @@
   },
   {
     "id": "a0010",
-    "article_name": "Github Action",
-    "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR39ldtVNqi-TTD7cs27mTGPdGanwulOJyHQ&s",
-    "tags": ["github action"],
+    "article_name": "MLflow Tracking",
+    "article_img":"https://viso.ai/wp-content/uploads/2024/03/mlflow.jpg",
+    "tags": ["mlflow tracking"],
     "data_article":"../data/Article11.json",
     "url_path":"/article/articlepage11"
   },

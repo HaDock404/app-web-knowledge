@@ -1,22 +1,135 @@
 {
-  "title": "Github Action",
+  "title": "MLflow Tracking",
   "content": [
     {
       "type": "image",
-      "src": "https://renemages.wordpress.com/wp-content/uploads/2019/07/python-logo.jpg",
+      "src": "https://viso.ai/wp-content/uploads/2024/03/mlflow.jpg",
       "alt": ""
     },
     {
-      "type": "jump"
+      "type": "index",
+      "items": [
+        { "text": "Introduction", "anchor": "anchor0" },
+        { "text": "Installation", "anchor": "anchor1" },
+        { "text": "Structure de projet", "anchor": "anchor2" },
+        { "text": "Exemple", "anchor": "anchor3" },
+        { "text": "Lancement de l'interface MLflow UI", "anchor": "anchor4" },
+        { "text": "Fonctionnalités avancées", "anchor": "anchor5" }
+
+        
+      ]
     },
+    
+    
     {
       "type": "heading",
       "level": 2,
-      "text": "Heading"
+      "text": "Introduction",
+      "anchor": "anchor0"
     },
     {
       "type": "paragraph",
-      "text": "Lorem machin truc."
+      "text": "MLflow Tracking est un outil open-source qui permet de suivre et enregistrer automatiquement les paramètres, métriques et artefacts des entraînements de modèles, de comparer facilement les performances de différents modèles sur des runs successifs, de centraliser et versionner les expériences de machine learning et enfin de faciliter la reproductibilité des expériences."
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Installation",
+      "anchor": "anchor1"
+    },
+    {
+      "type": "code",
+      "text": "pip install mlflow scikit-learn pandas"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Structure de projet",
+      "anchor": "anchor2"
+    },
+    {
+      "type": "code",
+      "text": "/mlflow_tracking_project\n    ├── mlruns/              # dossier créé automatiquement par MLflow pour stocker les runs\n    ├── scripts/\n        └── train_model.py   # script d'entraînement\n    └── requirements.txt     # dépendances (mlflow, pandas, scikit-learn)\n"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Exemple",
+      "anchor": "anchor3"
+    },
+    {
+      "type": "paragraph",
+      "text": "Chargement des données"
+    },
+    {
+      "type": "code",
+      "text": "from sklearn import datasets\nfrom sklearn.model_selection import train_test_split\nimport pandas as pd\n\n# Charger le dataset Iris\ndata = datasets.load_iris()\nX_train, X_test, y_train, y_test = train_test_split(\n    data.data,\n    data.target,\n    test_size=0.4,\n    random_state=42\n)"
+    },
+    {
+      "type": "paragraph",
+      "text": "Activer MLflow et initialiser un experiment"
+    },
+    {
+      "type": "code",
+      "text": "import mlflow\nimport mlflow.sklearn\n\n# Créer un experiment ou utiliser un existant\nmlflow.set_experiment(\"Iris_Logistic_Regression\")"
+    },
+    {
+      "type": "paragraph",
+      "text": "Utilisation d’autolog pour simplifier le tracking (hyperparamètres utilisés, métriques, artefacts)"
+    },
+    {
+      "type": "code",
+      "text": "mlflow.sklearn.autolog()"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exécution de plusieurs runs pour comparaison"
+    },
+    {
+      "type": "code",
+      "text": "from sklearn.linear_model import LogisticRegression\n\n# Premier run avec paramètres par défaut\nwith mlflow.start_run(run_name=\"log_reg_default\"):\n    clf = LogisticRegression()\n    clf.fit(X_train, y_train)\n\n# Second run avec max_iter modifié\nwith mlflow.start_run(run_name=\"log_reg_max_iter_200\"):\n    clf2 = LogisticRegression(max_iter=200)\n    clf2.fit(X_train, y_train)"
+    },
+
+
+     {
+      "type": "heading",
+      "level": 2,
+      "text": "Lancement de l'interface MLflow UI",
+      "anchor": "anchor4"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pour visualiser les expériences dans une interface claire :"
+    },
+    {
+      "type": "code",
+      "text": "mlflow ui --port 5000"
+    },
+    {
+      "type": "paragraph",
+      "text": "Puis ouvrir http://127.0.0.1:5000"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fonctionnalités avancées",
+      "anchor": "anchor5"
+    },
+    {
+      "type": "paragraph",
+      "text": "Log manuel de paramètres et métriques"
+    },
+    {
+      "type": "code",
+      "text": "with mlflow.start_run(run_name=\"log_reg_custom_logging\"):\n    clf = LogisticRegression(max_iter=300)\n    clf.fit(X_train, y_train)\n    accuracy = clf.score(X_test, y_test)\n\n    mlflow.log_param(\"max_iter\", 300)\n    mlflow.log_metric(\"accuracy\", accuracy)\n\n    # Sauvegarder le modèle\n    mlflow.sklearn.log_model(clf, \"model\")"
     }
   ]
 }
