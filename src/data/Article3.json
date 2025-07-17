@@ -3,7 +3,7 @@
   "content": [
     {
       "type": "image",
-      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMek698YjgnhBKtUXZ2W2xrlCchPoFpJGzOA&s",
+      "src": "https://storage.googleapis.com/hadock404-knowledge/gcp.png",
       "alt": ""
     },
     {
@@ -13,6 +13,7 @@
         { "text": "Authentification", "anchor": "anchor1" },
         { "text": "Projet", "anchor": "anchor2" },
         { "text": "Bucket Storage", "anchor": "anchor3" },
+        { "text": "Accès aux données du Bucket", "anchor": "anchor5" },
         { "text": "Instances", "anchor": "anchor4" }
       ]
     },
@@ -99,7 +100,7 @@
     },
     {
       "type": "code",
-      "text": "gcloud config list"
+      "text": "gcloud projects list"
     },
     {
       "type": "paragraph",
@@ -166,6 +167,14 @@
     },
     {
       "type": "paragraph",
+      "text": "Envoyer tous les fichiers d'un dossier dans un Bucket :"
+    },
+    {
+      "type": "code",
+      "text": "gcloud storage cp -r . gs://mon-bucket/"
+    },
+    {
+      "type": "paragraph",
       "text": "Lister les fichiers du Bucket :"
     },
     {
@@ -188,6 +197,55 @@
       "type": "code",
       "text": "gcloud storage rm gs://mon-datalake/mon_fichier.csv"
     },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Accès aux données du Bucket",
+      "anchor": "anchor5"
+    },
+    {
+      "type": "paragraph",
+      "text": "Rendre tout le bucket public en lecture"
+    },
+    {
+      "type": "code",
+      "text": "gcloud storage buckets add-iam-policy-binding gs://mon-bucket \\\n  --member=allUsers \\\n  --role=roles/storage.objectViewer"
+    },
+    {
+      "type": "paragraph",
+      "text": "Rendre un seul fichier public"
+    },
+    {
+      "type": "code",
+      "text": "gcloud storage objects add-iam-policy-binding gs://mon-bucket/image1.png \\\n  --member=allUsers \\\n  --role=roles/storage.objectViewer"
+    },
+    {
+      "type": "paragraph",
+      "text": "Accès restreint (privé par défaut)"
+    },
+    {
+      "type": "code",
+      "text": "# partager de manière restreinte\n      # utilisateurs Google (user:email@gmail.com)\n      # comptes de service (serviceAccount:my-service-account@project.iam.gserviceaccount.com)\n      # groupes Google (group:mon-groupe@domain.com)\n      gcloud storage buckets add-iam-policy-binding gs://mon-bucket \\\n  --member=user:toto@gmail.com \\\n  --role=roles/storage.objectViewer"
+    },
+    {
+      "type": "paragraph",
+      "text": "Voir la politique IAM actuelle d’un bucket"
+    },
+    {
+      "type": "code",
+      "text": "gcloud storage buckets get-iam-policy gs://mon-bucket"
+    },
+    {
+      "type": "paragraph",
+      "text": "Rendre un bucket non public"
+    },
+    {
+      "type": "code",
+      "text": "gcloud storage buckets remove-iam-policy-binding gs://mon-bucket \\\n  --member=allUsers \\\n  --role=roles/storage.objectViewer"
+    },
+
 
     {
       "type": "heading",

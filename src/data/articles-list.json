@@ -2,7 +2,7 @@
   {
     "id": "a0000",
     "article_name": "Python",
-    "article_img":"https://renemages.wordpress.com/wp-content/uploads/2019/07/python-logo.jpg",
+    "article_img":"https://storage.googleapis.com/hadock404-knowledge/python.png",
     "tags": ["python"],
     "data_article":"../data/Article1.json",
     "url_path":"/article/articlepage1"
@@ -10,7 +10,7 @@
   {
     "id": "a0001",
     "article_name": "React",
-    "article_img":"https://miro.medium.com/v2/resize:fit:2000/0*zj_kGMq6f2ZxW7p3.png",
+    "article_img":"https://storage.googleapis.com/hadock404-knowledge/react.png",
     "tags": ["react"],
     "data_article":"../data/Article2.json",
     "url_path":"/article/articlepage2"
@@ -18,7 +18,7 @@
   {
     "id": "a0002",
     "article_name": "GCP",
-    "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMek698YjgnhBKtUXZ2W2xrlCchPoFpJGzOA&s",
+    "article_img":"https://storage.googleapis.com/hadock404-knowledge/gcp.png",
     "tags": ["GCP"],
     "data_article":"../data/Article3.json",
     "url_path":"/article/articlepage3"
@@ -26,23 +26,23 @@
   {
     "id": "a0003",
     "article_name": "psql",
-    "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsHhT0lhtqSDNWxRp-jWjGiqMvYce069W8uA&s",
-    "tags": ["SQL"],
+    "article_img":"https://storage.googleapis.com/hadock404-knowledge/psql.png",
+    "tags": ["psql"],
     "data_article":"../data/Article4.json",
     "url_path":"/article/articlepage4"
   },
   {
     "id": "a0004",
     "article_name": "SSH",
-    "article_img":"https://www.skyminds.net/wp-content/uploads/2019/06/ssh-logo-768x478.png",
-    "tags": ["consulting"],
+    "article_img":"https://storage.googleapis.com/hadock404-knowledge/ssh.png",
+    "tags": ["ssh"],
     "data_article":"../data/Article5.json",
     "url_path":"/article/articlepage5"
   },
   {
     "id": "a0005",
     "article_name": "Scraping",
-    "article_img":"https://kinsta.com/wp-content/uploads/2022/07/Types-of-web-data.png",
+    "article_img":"https://storage.googleapis.com/hadock404-knowledge/scraping.png",
     "tags": ["scraping"],
     "data_article":"../data/Article6.json",
     "url_path":"/article/articlepage6"
@@ -50,7 +50,7 @@
   {
     "id": "a0006",
     "article_name": "Conda",
-    "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO_zAeFKx1iw_cF_Md2KQPodPj_Bsl3E5PTg&s",
+    "article_img":"https://storage.googleapis.com/hadock404-knowledge/conda.png",
     "tags": ["conda"],
     "data_article":"../data/Article7.json",
     "url_path":"/article/articlepage7"
@@ -58,7 +58,7 @@
   {
     "id": "a0007",
     "article_name": "Test Unitaire",
-    "article_img":"https://www.all4test.fr/wp-content/uploads/2024/05/Test-unitaire.png",
+    "article_img":"https://storage.googleapis.com/hadock404-knowledge/unittests.png",
     "tags": ["test unitaire"],
     "data_article":"../data/Article8.json",
     "url_path":"/article/articlepage8"
@@ -66,7 +66,7 @@
   {
     "id": "a0008",
     "article_name": "Git",
-    "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdd25hyNQOMs4Xx1Cv_A_oaT0zagfSWlXMBA&s",
+    "article_img":"https://storage.googleapis.com/hadock404-knowledge/git.png",
     "tags": ["git"],
     "data_article":"../data/Article9.json",
     "url_path":"/article/articlepage9"
@@ -74,7 +74,7 @@
   {
     "id": "a0009",
     "article_name": "Gitlab Server",
-    "article_img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFKg9m11etTIsPzyFsrUawOJDGAiABkEtF5w&s",
+    "article_img":"https://storage.googleapis.com/hadock404-knowledge/gitlab.png",
     "tags": ["gitlab"],
     "data_article":"../data/Article10.json",
     "url_path":"/article/articlepage10"
@@ -82,7 +82,7 @@
   {
     "id": "a0010",
     "article_name": "MLflow Tracking",
-    "article_img":"https://viso.ai/wp-content/uploads/2024/03/mlflow.jpg",
+    "article_img":"https://storage.googleapis.com/hadock404-knowledge/mlflow.png",
     "tags": ["mlflow tracking"],
     "data_article":"../data/Article11.json",
     "url_path":"/article/articlepage11"
@@ -90,7 +90,7 @@
   {
     "id": "a0011",
     "article_name": "Memgraph",
-    "article_img":"https://careerdate.fer.hr/wp-content/uploads/2018/11/Memgraph-logo-gradient-cmyk-1876x938.jpg",
+    "article_img":"https://storage.googleapis.com/hadock404-knowledge/memgraph.png",
     "tags": ["memgraph"],
     "data_article":"../data/Article12.json",
     "url_path":"/article/articlepage12"
