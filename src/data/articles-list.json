@@ -94,5 +94,13 @@
     "tags": ["memgraph"],
     "data_article":"../data/Article12.json",
     "url_path":"/article/articlepage12"
+  },
+  {
+    "id": "a0012",
+    "article_name": "Node",
+    "article_img":"https://thumb.ac-illust.com/33/3387b0c3ef9fe42b4169a4031ddbf0bc_w.jpeg",
+    "tags": ["node"],
+    "data_article":"../data/Article13.json",
+    "url_path":"/article/articlepage13"
   }
 ]

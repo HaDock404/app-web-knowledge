@@ -1,0 +1,208 @@
+{
+  "title": "Node.js",
+  "content": [
+    {
+      "type": "image",
+      "src": "https://thumb.ac-illust.com/33/3387b0c3ef9fe42b4169a4031ddbf0bc_w.jpeg",
+      "alt": ""
+    },
+    {
+      "type": "index",
+      "items": [
+        { "text": "Introduction", "anchor": "anchor0" },
+        { "text": "Initialisation du projet", "anchor": "anchor1" },
+        { "text": "Structure", "anchor": "anchor2" },
+        { "text": "Fichier d’entrée : index.js", "anchor": "anchor3" },
+        { "text": "Dossier src/config/ – Configuration", "anchor": "anchor4" },
+        { "text": "Dossier src/routes/ – Routes", "anchor": "anchor5" },
+        { "text": "Dossier src/services/ – Logique métier", "anchor": "anchor6" },
+        { "text": "Dossier src/controllers/ – Contrôleurs", "anchor": "anchor7" },
+        { "text": "Dossier src/middlewares/ – Middlewares", "anchor": "anchor8" }
+
+
+        
+      ]
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Introduction",
+      "anchor": "anchor0"
+    },
+    {
+      "type": "paragraph",
+      "text": "Node.js est un environnement d’exécution JavaScript côté serveur, construit sur le moteur V8 de Chrome. Il est rapide, non bloquant (asynchrone), il utilise l'écosystème npm et il est idéal pour des API REST, websockets, microservices"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Initialisation du projet",
+      "anchor": "anchor1"
+    },
+    {
+      "type": "code",
+      "text": "mkdir node-api && cd node-api\nnpm init -y\nnpm install express dotenv"
+    },
+    {
+      "type": "paragraph",
+      "text": "Optionnel (mais recommandé) :"
+    },
+    {
+      "type": "code",
+      "text": "npm install nodemon --save-dev"
+    },
+    {
+      "type": "paragraph",
+      "text": "Dans package.json, ajoute :"
+    },
+    {
+      "type": "code",
+      "text": "\"scripts\": {\n  \"start\": \"node index.js\",\n  \"dev\": \"nodemon index.js\"\n}"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Structure",
+      "anchor": "anchor2"
+    },
+    {
+      "type": "code",
+      "text": "project/\n│\n├── index.js                # Point d’entrée principal\n├── src/\n│   ├── config/             # Configuration (DB, .env, etc.)\n│   ├── routes/             # Définition des routes\n│   ├── services/           # Logique métier\n│   ├── controllers/        # Contrôleurs (logique liée aux routes)\n│   ├── middlewares/        # Middlewares personnalisés\n└── .env                    # Variables d'environnement\n"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fichier d’entrée : index.js",
+      "anchor": "anchor3"
+    },
+    {
+      "type": "code",
+      "text": "require('dotenv').config();\nconst express = require('express');\nconst app = express();\nconst routes = require('./src/routes');\n\napp.use(express.json());\napp.use('/api', routes);\n\nconst PORT = process.env.PORT || 3000;\napp.listen(PORT, () => console.log(`Server running on port ${PORT}`));"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Dossier src/config/ – Configuration",
+      "anchor": "anchor4"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exemple : src/config/db.js"
+    },
+    {
+      "type": "code",
+      "text": "const mysql = require('mysql2/promise');\n\nconst pool = mysql.createPool({\n  host: process.env.DB_HOST,\n  user: process.env.DB_USER,\n  password: process.env.DB_PASSWORD,\n  database: process.env.DB_NAME,\n});\n\nmodule.exports = pool;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Et dans .env :"
+    },
+    {
+      "type": "code",
+      "text": "PORT=3000\nDB_HOST=localhost\nDB_USER=root\nDB_PASSWORD=yourpassword\nDB_NAME=yourdbname"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Dossier src/routes/ – Routes",
+      "anchor": "anchor5"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exemple : src/routes/userRoutes.js"
+    },
+    {
+      "type": "code",
+      "text": "const express = require('express');\nconst router = express.Router();\nconst userController = require('../controllers/userController');\n\nrouter.get('/', userController.getAllUsers);\nrouter.post('/', userController.createUser);\n\nmodule.exports = router;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Et dans src/routes/index.js :"
+    },
+    {
+      "type": "code",
+      "text": "const express = require('express');\nconst router = express.Router();\n\nconst userRoutes = require('./userRoutes');\nrouter.use('/users', userRoutes);\n\nmodule.exports = router;"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Dossier src/services/ - Logique métier",
+      "anchor": "anchor6"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exemple : src/services/userService.js"
+    },
+    {
+      "type": "code",
+      "text": "const db = require('../config/db');\n\nconst getAllUsers = async () => {\n  const [rows] = await db.query('SELECT * FROM users');\n  return rows;\n};\n\nconst createUser = async (userData) => {\n  const { name, email } = userData;\n  await db.query('INSERT INTO users (name, email) VALUES (?, ?)', [name, email]);\n};\n\nmodule.exports = { getAllUsers, createUser };"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Dossier src/controllers/ – Contrôleurs",
+      "anchor": "anchor7"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exemple : src/controllers/userController.js"
+    },
+    {
+      "type": "code",
+      "text": "const userService = require('../services/userService');\n\nconst getAllUsers = async (req, res, next) => {\n  try {\n    const users = await userService.getAllUsers();\n    res.json(users);\n  } catch (error) {\n    next(error);\n  }\n};\n\nconst createUser = async (req, res, next) => {\n  try {\n    await userService.createUser(req.body);\n    res.status(201).json({ message: 'User created' });\n  } catch (error) {\n    next(error);\n  }\n};\n\nmodule.exports = { getAllUsers, createUser };"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Dossier src/middlewares/ – Middlewares",
+      "anchor": "anchor8"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exemple : errorHandler.js"
+    },
+    {
+      "type": "code",
+      "text": "const errorHandler = (err, req, res, next) => {\n  console.error(err);\n  res.status(500).json({ error: 'Internal server error' });\n};\n\nmodule.exports = errorHandler;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Et l’ajouter dans index.js après les routes :"
+    },
+    {
+      "type": "code",
+      "text": "const errorHandler = require('./src/middlewares/errorHandler');\napp.use(errorHandler);"
+    },
+
+
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Tester avec Postman / curl",
+      "anchor": "anchor9"
+    },
+    {
+      "type": "code",
+      "text": "curl -X POST http://localhost:3000/api/users -H \"Content-Type: application/json\" -d '{\"name\": \"John\", \"email\": \"john@example.com\"}'\n\ncurl http://localhost:3000/api/users"
+    }
+    
+  ]
+}
